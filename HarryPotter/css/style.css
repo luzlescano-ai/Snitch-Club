@@ -1,0 +1,964 @@
+/* ==========================================================================
+   Mundo Mágico / Harry Potter Design System
+   Exact Wireframe Palette & Typography
+   ========================================================================== */
+
+/* Local Fonts (EB Garamond included in the project) */
+@font-face {
+    font-family: "EBGaramond";
+    src: url("font/EBGaramond-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "EBGaramond";
+    src: url("font/EBGaramond-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Fallback definitions for template compatibility */
+@font-face {
+    font-family: "GooleSans";
+    src: url("font/EBGaramond-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Sans";
+    src: url("font/EBGaramond-Regular.ttf") format("truetype");
+}
+
+/* Color Variables extracted directly from the Wireframe design */
+:root {
+    --color-header-bg: #1D1B26;
+    /* Deep midnight charcoal / purple */
+    --color-nav-bg: #2F2033;
+    /* Dark plum / aubergine */
+    --color-nav-hover: #432E48;
+    /* Lighter plum hover */
+    --color-parchment-bg: #F0DAB5;
+    /* Authentic parchment beige */
+    --color-parchment-card: #EFE6D5;
+    /* Lighter parchment container */
+    --color-card-dark: #1D1B26;
+    /* Dark card placeholder / frame */
+    --color-search-bg: #F2EEE3;
+    /* Cream search pill */
+    --color-ink-dark: #1D1B26;
+    /* Deep dark ink for text and borders */
+    --color-ink-muted: #4B3D50;
+    /* Muted ink for secondary text */
+    --color-ink-light: #F2EEE3;
+    /* Cream text for dark backgrounds */
+    --color-gold: #C5A059;
+    /* Subtle golden magical accent */
+    --color-gold-bright: #DFBA6E;
+
+    --font-serif: "EBGaramond", "Playfair Display", "Cinzel", "Georgia", serif;
+    --font-sans: "EBGaramond", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+}
+
+/* Base Reset & Styling */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-parchment-bg);
+    background-image: 
+        linear-gradient(rgba(247, 237, 222, 0.88), rgba(240, 224, 198, 0.90)),
+        url('../imgs/Mapa del merodeador harry potter.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--color-ink-dark);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Headings & Editorial Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-serif,
+.brand-name,
+.wireframe-nav-link,
+.wireframe-title,
+.wireframe-caption,
+.section-subtitle {
+    font-family: var(--font-serif) !important;
+}
+
+p,
+a,
+span,
+button,
+input {
+    font-family: var(--font-sans);
+}
+
+/* --------------------------------------------------------------------------
+   Header (Top Bar)
+   -------------------------------------------------------------------------- */
+.wireframe-header {
+    background-color: var(--color-header-bg);
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wireframe-header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-name {
+    color: var(--color-ink-light);
+    font-size: 1.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-name:hover {
+    color: #FFFFFF;
+    opacity: 0.95;
+}
+
+.search-box-wrapper {
+    position: relative;
+    width: 170px;
+}
+
+.search-input {
+    width: 100%;
+    background-color: var(--color-search-bg);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 9999px;
+    padding: 6px 14px 6px 34px;
+    font-size: 0.9rem;
+    color: var(--color-ink-dark);
+    outline: none;
+    transition: all 0.25s ease;
+    font-family: var(--font-sans);
+}
+
+.search-input::placeholder {
+    color: #6C6473;
+    font-style: italic;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.35);
+    background-color: #FFFFFF;
+    width: 210px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6C6473;
+    display: flex;
+    align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Bar
+   -------------------------------------------------------------------------- */
+.wireframe-nav-bar {
+    background-color: var(--color-nav-bg);
+    box-shadow: 0 4px 12px rgba(29, 27, 38, 0.15);
+    position: relative;
+    z-index: 100;
+}
+
+.wireframe-nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Botón Hamburguesa (oculto en escritorio) */
+.nav-hamburger-btn {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    padding: 13px 8px;
+    color: var(--color-ink-light);
+    font-family: var(--font-serif);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.nav-hamburger-btn:hover {
+    color: #FFFFFF;
+}
+
+.nav-hamburger-btn:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -2px;
+}
+
+.hamburger-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hamburger-icon {
+    width: 24px;
+    height: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    background-color: #F2EEE3;
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+    transform-origin: center;
+}
+
+.nav-hamburger-btn:hover .hamburger-bar {
+    background-color: var(--color-gold-bright);
+}
+
+/* Animación a 'X' cuando el menú está abierto */
+.wireframe-nav-bar.is-open .hamburger-bar:nth-child(1) {
+    transform: translateY(7.75px) rotate(45deg);
+}
+
+.wireframe-nav-bar.is-open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.wireframe-nav-bar.is-open .hamburger-bar:nth-child(3) {
+    transform: translateY(-7.75px) rotate(-45deg);
+}
+
+.wireframe-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.wireframe-nav-item {
+    margin: 0;
+    padding: 0;
+}
+
+.wireframe-nav-link {
+    display: block;
+    padding: 13px 18px;
+    color: #E2D7E8;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.wireframe-nav-link:hover {
+    color: #FFFFFF;
+}
+
+/* Active indicator: line underneath matching the wireframe */
+.wireframe-nav-link.active {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.wireframe-nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 14px;
+    right: 14px;
+    height: 2.5px;
+    background-color: #FFFFFF;
+    border-radius: 2px 2px 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Main Content Layout & Secciones con Fondo del Mapa del Merodeador
+   -------------------------------------------------------------------------- */
+.wireframe-main-content {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 45px 20px 60px 20px;
+}
+
+/* Section: Introducción */
+.intro-section {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.intro-title {
+    font-size: 2.15rem;
+    font-weight: 700;
+    color: var(--color-ink-dark);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+.intro-subtitle {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--color-ink-muted);
+    margin: 0 auto 18px auto;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.intro-paragraph {
+    max-width: 780px;
+    margin: 0 auto;
+    font-size: 1.02rem;
+    line-height: 1.78;
+    color: var(--color-ink-dark);
+    text-align: justify;
+    text-justify: inter-word;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Section: La saga de libros */
+.books-section {
+    margin-bottom: 40px;
+}
+
+.section-heading-books {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-ink-dark);
+    margin-bottom: 25px;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* Book Carousel Container */
+.book-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px auto 10px auto;
+}
+
+.carousel-nav-btn {
+    background-color: rgba(253, 248, 238, 0.92);
+    border: 1px solid rgba(47, 32, 51, 0.25);
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--color-ink-dark);
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(29, 27, 38, 0.12);
+    backdrop-filter: blur(4px);
+    flex-shrink: 0;
+}
+
+.carousel-nav-btn:hover {
+    color: #DFBA6E;
+    background-color: var(--color-nav-bg);
+    border-color: var(--color-gold);
+    transform: scale(1.12);
+    box-shadow: 0 6px 16px rgba(29, 27, 38, 0.25);
+}
+
+.carousel-nav-btn:active {
+    transform: scale(0.95);
+}
+
+.books-display-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+/* Book Cards */
+.book-card {
+    background-color: var(--color-card-dark);
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(29, 27, 38, 0.28);
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.book-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.book-card:hover img {
+    transform: scale(1.04);
+}
+
+/* Wireframe Proportioning: side cards are slightly smaller, center card is featured */
+.book-card.side-card {
+    width: 135px;
+    height: 215px;
+    opacity: 0.9;
+}
+
+.book-card.center-card {
+    width: 170px;
+    height: 260px;
+    box-shadow: 0 16px 35px rgba(29, 27, 38, 0.38);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    z-index: 2;
+}
+
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px rgba(29, 27, 38, 0.45);
+    opacity: 1;
+}
+
+.book-card-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(29, 27, 38, 0.95) 0%, rgba(29, 27, 38, 0.7) 60%, transparent 100%);
+    padding: 24px 10px 8px 10px;
+    color: var(--color-ink-light);
+    font-size: 0.8rem;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-weight: 600;
+}
+
+/* Wireframe Captions */
+.wireframe-caption {
+    text-align: center;
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: var(--color-ink-dark);
+    margin-top: 18px;
+    letter-spacing: 0.3px;
+}
+
+.books-description-text {
+    max-width: 780px;
+    margin: 24px auto 0 auto;
+    font-size: 1.02rem;
+    line-height: 1.78;
+    color: var(--color-ink-dark);
+    text-align: justify;
+    text-justify: inter-word;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Horizontal Divider matching wireframe */
+.wireframe-divider {
+    border: none;
+    height: 1.2px;
+    background-color: var(--color-ink-dark);
+    opacity: 0.25;
+    margin: 10px 0 40px 0;
+}
+
+/* Section: Películas */
+.movies-section {
+    margin-bottom: 30px;
+}
+
+.movies-intro-text {
+    max-width: 780px;
+    margin: 0 auto 30px auto;
+    font-size: 1.02rem;
+    line-height: 1.78;
+    color: var(--color-ink-dark);
+    text-align: justify;
+    text-justify: inter-word;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Movie Carousel Outer Wrapper */
+.movie-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    margin: 20px auto 14px auto;
+}
+
+.movie-carousel-wrapper .carousel-nav-btn {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* Movie Card Container (Big rounded wireframe box) */
+.movie-showcase-box {
+    border: 1.5px solid rgba(47, 32, 51, 0.25);
+    border-radius: 18px;
+    background-color: rgba(253, 248, 238, 0.94);
+    backdrop-filter: blur(6px);
+    padding: 34px 38px 24px 38px;
+    margin: 0 auto;
+    width: 100%;
+    box-shadow: 0 10px 28px rgba(29, 27, 38, 0.10);
+    transition: all 0.3s ease;
+}
+
+.movie-box-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+/* Left Column: Portada */
+.movie-col-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie-poster-card {
+    width: 100%;
+    max-width: 215px;
+    aspect-ratio: 2/3;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--color-card-dark);
+    box-shadow: 0 12px 28px rgba(29, 27, 38, 0.3);
+    border: 1px solid rgba(29, 27, 38, 0.15);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-poster-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 16px 36px rgba(29, 27, 38, 0.38);
+}
+
+.movie-poster-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.28s ease, transform 0.35s ease;
+}
+
+.movie-poster-card img.fade-out {
+    opacity: 0;
+    transform: scale(0.97);
+}
+
+.movie-counter {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-ink-dark);
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    background-color: rgba(29, 27, 38, 0.08);
+    border-radius: 9999px;
+}
+
+.col-label {
+    font-family: var(--font-serif);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-ink-dark);
+    margin-top: 15px;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+/* Right Column: Sinopsis */
+.movie-col-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+}
+
+.movie-synopsis-content {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--color-ink-dark);
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.movie-title-header {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-ink-dark);
+    margin-bottom: 8px;
+    border-bottom: 1px dashed rgba(29, 27, 38, 0.25);
+    padding-bottom: 6px;
+}
+
+.movie-meta {
+    font-size: 0.88rem;
+    color: var(--color-ink-muted);
+    margin-bottom: 14px;
+    font-style: italic;
+}
+
+.movie-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(29, 27, 38, 0.15);
+}
+
+.movie-nav-btn {
+    background: var(--color-header-bg);
+    color: var(--color-ink-light);
+    border: none;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.movie-nav-btn:hover {
+    background: var(--color-nav-bg);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.movie-indicators {
+    display: flex;
+    gap: 6px;
+}
+
+.indicator-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: rgba(29, 27, 38, 0.25);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.indicator-dot.active {
+    background-color: var(--color-header-bg);
+    transform: scale(1.3);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.wireframe-footer {
+    background-color: var(--color-header-bg);
+    color: #C8BECE;
+    padding: 32px 0 24px 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wireframe-footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-copy {
+    font-size: 0.92rem;
+    color: #BDB1C4;
+    margin: 0;
+}
+
+.footer-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: #9C8FA3;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 14px;
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-social-link {
+    color: #C8BECE;
+    font-size: 1.15rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-social-link:hover {
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Navigation (Tablets & Mobiles: max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .nav-hamburger-btn {
+        display: flex;
+        white-space: nowrap;
+    }
+
+    .wireframe-nav-inner {
+        padding: 0 16px;
+    }
+
+    .wireframe-nav-list {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 0.25s ease,
+            visibility 0.35s;
+    }
+
+    .wireframe-nav-bar.is-open .wireframe-nav-list {
+        max-height: 400px;
+        opacity: 1;
+        visibility: visible;
+        padding: 4px 0 12px 0;
+    }
+
+    .wireframe-nav-item {
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .wireframe-nav-link {
+        padding: 13px 18px;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+        border-left: 3px solid transparent;
+        border-radius: 6px;
+        margin: 2px 0;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .wireframe-nav-link:hover {
+        background-color: var(--color-nav-hover);
+        color: #FFFFFF;
+        border-left-color: var(--color-gold);
+        transform: translateX(4px);
+    }
+
+    .wireframe-nav-link.active {
+        background-color: rgba(197, 160, 89, 0.15);
+        color: var(--color-gold-bright) !important;
+        border-left-color: var(--color-gold-bright);
+        font-weight: 600;
+    }
+
+    .wireframe-nav-link.active::after {
+        display: none;
+        /* Ocultar subrayado de escritorio en pantallas táctiles/móviles */
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Media Queries (< 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .wireframe-header-inner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .search-box-wrapper {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .search-input:focus {
+        width: 100%;
+    }
+
+    .wireframe-main-content {
+        padding: 30px 16px 45px 16px;
+    }
+
+    .intro-title {
+        font-size: 1.85rem;
+    }
+
+    .books-display-row {
+        gap: 10px;
+    }
+
+    .book-card.side-card {
+        width: 95px;
+        height: 155px;
+    }
+
+    .book-card.center-card {
+        width: 125px;
+        height: 195px;
+    }
+
+    .movie-box-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .movie-poster-card {
+        max-width: 180px;
+    }
+
+    .movie-showcase-box {
+        padding: 24px 20px;
+    }
+
+    .wireframe-footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+    }
+}
+
+/* ==========================================================================
+   Acordeón - Mismo color que .quiz-question-box
+   ========================================================================== */
+.accordion {
+    --bs-accordion-bg: rgba(247, 235, 215, 0.6);
+    --bs-accordion-color: var(--color-ink-dark);
+    --bs-accordion-border-color: rgba(29, 27, 38, 0.25);
+    --bs-accordion-btn-bg: rgb(244 228 201);
+    --bs-accordion-btn-color: var(--color-ink-dark);
+    --bs-accordion-btn-hover-bg: rgba(235, 218, 187, 0.5);
+    --bs-accordion-btn-hover-color: var(--color-ink-dark);
+    --bs-accordion-active-bg: rgba(235, 218, 187, 0.7);
+    --bs-accordion-active-color: var(--color-ink-dark);
+    background-color: rgba(247, 235, 215, 0.6) !important;
+    color: var(--color-ink-dark) !important;
+}
+
+.accordion-item {
+    background-color: rgba(247, 235, 215, 0.6) !important;
+    color: var(--color-ink-dark) !important;
+    border-color: rgba(29, 27, 38, 0.25) !important;
+}
+
+.accordion-header {
+    background-color: rgb(244 228 201) !important;
+    color: var(--color-ink-dark) !important;
+}
+
+.accordion-header:hover {
+    background-color: rgba(235, 218, 187, 0.5) !important;
+    color: var(--color-ink-dark) !important;
+
+}
+
+.accordion-item[open] > .accordion-header {
+    background-color: rgba(235, 218, 187, 0.7) !important;
+    color: var(--color-ink-dark) !important;
+    box-shadow: inset 0 -1px 0 rgba(29, 27, 38, 0.2) !important;
+}
+.accordion .accordion-item {
+    border-color: #000000 !important;
+}
+.accordion-body {
+    background-color: rgba(247, 235, 215, 0.6) !important;
+    color: var(--color-ink-dark) !important;
+}
+
+.accordion-icon {
+    color: var(--color-ink-dark) !important;
+}
+
+.accordion-body code {
+    color: var(--color-ink-dark) !important;
+    background-color: rgba(29, 27, 38, 0.08) !important;
+}

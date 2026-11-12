@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Descubrí tu magia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .quiz-start-btn {
+            background-color: var(--color-nav-bg);
+            color: var(--color-ink-light);
+            border: none;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 15px auto 25px auto;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-start-btn:hover {
+            background-color: var(--color-header-bg);
+            transform: scale(1.05);
+        }
+
+        .quiz-question-box {
+            border: 1.5px solid var(--color-ink-dark);
+            border-radius: 18px;
+            background-color: rgba(247, 235, 215, 0.6);
+            padding: 24px 32px;
+            margin-bottom: 0;
+            flex: 1;
+            max-width: 730px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(29, 27, 38, 0.08);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-align: left;
+        }
+
+        /* Carrusel Quiz */
+        .quiz-carousel-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin: 20px auto 55px auto;
+            max-width: 820px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-carousel-wrapper.is-hidden {
+            display: none !important;
+        }
+
+        .quiz-carousel-wrapper.is-visible {
+            display: flex !important;
+            animation: quizSlideDown 0.35s ease forwards;
+        }
+
+        @keyframes quizSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-nav-btn {
+            background: transparent;
+            border: none;
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            line-height: 1;
+            color: var(--color-ink-dark);
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .carousel-nav-btn:hover {
+            color: var(--color-nav-bg);
+            transform: scale(1.18);
+            background-color: rgba(47, 32, 51, 0.08);
+        }
+
+        .carousel-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .quiz-header {
+            margin-bottom: 16px;
+        }
+
+        .quiz-counter {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: rgba(29, 27, 38, 0.7);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .quiz-question-title {
+            font-size: 1.35rem;
+            font-family: var(--font-serif);
+            margin-bottom: 0;
+            color: var(--color-ink-dark);
+            font-weight: 600;
+        }
+
+        .quiz-options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 18px;
+        }
+
+        .quiz-option-card {
+            background-color: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(29, 27, 38, 0.25);
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-size: 1.02rem;
+            color: var(--color-ink-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+        }
+
+        .quiz-option-card:hover {
+            background-color: rgba(47, 32, 51, 0.08);
+            border-color: var(--color-ink-dark);
+            transform: translateY(-1px);
+        }
+
+        .quiz-option-card.selected {
+            background-color: var(--color-nav-bg);
+            color: var(--color-ink-light);
+            border-color: var(--color-nav-bg);
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(47, 32, 51, 0.25);
+        }
+
+        .quiz-option-card .option-label {
+            font-weight: 600;
+        }
+
+        @media (max-width: 580px) {
+            .quiz-options-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .quiz-question-box {
+                padding: 18px 20px;
+            }
+
+            .quiz-question-title {
+                font-size: 1.18rem;
+            }
+
+            .quiz-carousel-wrapper {
+                gap: 8px;
+            }
+
+            .carousel-nav-btn {
+                font-size: 2rem;
+                padding: 6px 8px;
+            }
+        }
+        
+
+        /* Acordeón - Mismo color que .quiz-question-box */
+        .accordion {
+            --bs-accordion-bg: rgba(247, 235, 215, 0.6);
+            --bs-accordion-color: var(--color-ink-dark);
+            --bs-accordion-border-color: rgba(29, 27, 38, 0.25);
+            --bs-accordion-btn-bg: rgb(244 228 201);
+            --bs-accordion-btn-color: var(--color-ink-dark);
+            --bs-accordion-btn-hover-bg: rgba(235, 218, 187, 0.5);
+            --bs-accordion-btn-hover-color: var(--color-ink-dark);
+            --bs-accordion-active-bg: rgba(235, 218, 187, 0.7);
+            --bs-accordion-active-color: var(--color-ink-dark);
+            background-color: rgba(247, 235, 215, 0.6) !important;
+            color: var(--color-ink-dark) !important;
+            margin-top: 15px;
+        }
+
+        /* Subtítulo y contenedor de Quiz Finalizado */
+        .quiz-finished-section {
+            margin: 30px auto 35px auto;
+            text-align: center;
+            transition: all 0.35s ease;
+        }
+
+        .quiz-finished-section.is-hidden {
+            display: none !important;
+        }
+
+        .quiz-finished-section.is-visible {
+            display: block !important;
+            animation: quizSlideDown 0.4s ease forwards;
+        }
+
+        .quiz-finished-title {
+            font-family: var(--font-serif);
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--color-ink-dark);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .quiz-finished-caption {
+            font-size: 1rem;
+            color: rgba(29, 27, 38, 0.8);
+            margin-bottom: 18px;
+        }
+
+        /* Botones de acción para desplegar Casas y Patronus */
+        .quiz-actions-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 10px auto 30px auto;
+            flex-wrap: wrap;
+        }
+
+        .accordion-wrapper {
+            transition: all 0.35s ease;
+            margin-bottom: 45px;
+            text-align: left;
+        }
+
+        .accordion-wrapper.is-hidden {
+            display: none !important;
+        }
+
+        .accordion-wrapper.is-visible {
+            display: block !important;
+            animation: quizSlideDown 0.35s ease forwards;
+        }
+
+        .accordion-title-section {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--color-ink-dark);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        /* Badge de resultado en el acordeón */
+        .badge-tu-resultado {
+            background-color: var(--color-nav-bg);
+            color: var(--color-ink-light);
+            font-size: 0.75rem;
+            font-family: var(--font-serif);
+            letter-spacing: 0.5px;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            margin-left: 10px;
+            font-weight: 600;
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid rgba(250, 246, 238, 0.3);
+            box-shadow: 0 2px 5px rgba(29, 27, 38, 0.2);
+        }
+
+        /* Botón Quiero saber más */
+        .btn-saber-mas {
+            background-color: var(--color-nav-bg);
+            color: var(--color-ink-light);
+            border: none;
+            padding: 7px 20px;
+            border-radius: 9999px;
+            font-family: var(--font-serif);
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-saber-mas:hover {
+            background-color: var(--color-header-bg);
+            transform: scale(1.04);
+        }
+
+        /* Modal Overlay por encima de la pantalla (tapa parte de la pantalla) */
+        .magic-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(20, 16, 24, 0.72);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .magic-modal-overlay.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .magic-modal-dialog {
+            background-color: rgb(244 228 201);
+            border: 2px solid var(--color-ink-dark);
+            border-radius: 20px;
+            max-width: 580px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 28px 26px 22px 26px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            color: var(--color-ink-dark);
+            text-align: left;
+            transform: scale(0.92) translateY(15px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .magic-modal-dialog.is-hidden {
+            display: none !important;
+        }
+
+        .magic-modal-overlay.is-active .magic-modal-dialog {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            line-height: 1;
+            color: var(--color-ink-dark);
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--color-nav-bg);
+            background-color: rgba(47, 32, 51, 0.1);
+            transform: scale(1.15);
+        }
+
+        .modal-dialog-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--color-ink-dark);
+            margin: 0 35px 12px 0;
+        }
+
+        .modal-img-container {
+            width: 100%;
+            margin: 12px 0 16px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .modal-info-img {
+            width: 100%;
+            max-height: 230px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1.5px solid var(--color-ink-dark);
+            display: block;
+            box-shadow: 0 4px 15px rgba(29, 27, 38, 0.15);
+        }
+
+        /* Espacio reservado con borde si todavía no tiene imagen cargada */
+        .modal-info-img:not([src]),
+        .modal-info-img[src=""] {
+            min-height: 120px;
+            background-color: rgba(47, 32, 51, 0.05);
+            border: 1.5px dashed var(--color-ink-dark);
+            display: block;
+        }
+
+        .modal-dialog-content {
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .modal-dialog-content h4 {
+            font-family: var(--font-serif);
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin: 14px 0 8px 0;
+            color: var(--color-ink-dark);
+        }
+
+        .modal-dialog-content ul {
+            margin: 6px 0 12px 20px;
+            padding: 0;
+        }
+
+        .modal-dialog-content li {
+            margin-bottom: 5px;
+        }
+
+        .modal-quote {
+            margin-top: 14px;
+            font-style: italic;
+            border-left: 3px solid var(--color-nav-bg);
+            padding-left: 12px;
+            color: rgba(29, 27, 38, 0.85);
+        }
+
+        .accordion-item {
+            background-color: rgba(247, 235, 215, 0.6) !important;
+            color: var(--color-ink-dark) !important;
+            border-color: rgba(29, 27, 38, 0.25) !important;
+        }
+
+        .accordion-header {
+            background-color: rgb(244 228 201) !important;
+            color: var(--color-ink-dark) !important;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(235, 218, 187, 0.5) !important;
+            color: var(--color-ink-dark) !important;
+        }
+
+        .accordion-item[open]>.accordion-header {
+            background-color: rgba(235, 218, 187, 0.7) !important;
+            color: var(--color-ink-dark) !important;
+            box-shadow: inset 0 -1px 0 rgba(29, 27, 38, 0.2) !important;
+        }
+
+        .accordion-body {
+            background-color: rgba(247, 235, 215, 0.6) !important;
+            color: var(--color-ink-dark) !important;
+        }
+
+        .accordion-icon {
+            color: var(--color-ink-dark) !important;
+        }
+
+        .accordion-body code {
+            color: var(--color-ink-dark) !important;
+            background-color: rgba(29, 27, 38, 0.08) !important;
+        }
+
+        .accordion-custom-item {
+            border: 1.5px solid var(--color-ink-dark);
+            border-radius: 14px;
+            overflow: hidden;
+            background-color: rgba(247, 235, 215, 0.6);
+            margin-top: 25px;
+        }
+
+        .accordion-row {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(29, 27, 38, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .accordion-row:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-row-open {
+            background-color: rgba(235, 218, 187, 0.6);
+            padding: 14px 18px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(32, 38, 27, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="wireframe-header">
+        <div class="wireframe-header-inner">
+            <a href="../index.html" class="brand-name"><img src="../imgs/logo.png" alt="Snitch Club" width="50">
+                <span>Snitch Club</span></a>
+            <div class="search-box-wrapper">
+                <span class="search-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="search" class="search-input" placeholder="Search" aria-label="Buscar">
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Navegación -->
+    <nav class="wireframe-nav-bar" aria-label="Navegación principal">
+        <div class="wireframe-nav-inner">
+            <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Abrir menú de navegación"
+                aria-expanded="false" aria-controls="navMenu">
+                <span class="hamburger-title">Menú de Navegación</span>
+                <span class="hamburger-icon" aria-hidden="true">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </span>
+            </button>
+
+            <ul class="wireframe-nav-list" id="navMenu">
+                <li class="wireframe-nav-item">
+                    <a href="../index.html" class="wireframe-nav-link">Home</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="casasymagos.html" class="wireframe-nav-link">Casas y magos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="historiayconflictos.html" class="wireframe-nav-link">Historia y conflictos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="descubritumagia.html" class="wireframe-nav-link active" aria-current="page">Descubrí tu
+                        magia</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido -->
+    <main class="wireframe-main-content">
+        <!-- Quizzes -->
+        <section class="intro-section" style="margin-bottom: 30px;">
+            <h1 class="intro-title">¡Sentite parte del mundo de Harry Potter!</h1>
+            <p class="intro-paragraph">
+                ¿Qué secretos guarda tu varita? ¿A qué casa de Hogwarts pertenecerías según el Sombrero Seleccionador?
+                Pon a prueba tu afinidad y descubre el reflejo de tu espíritu mágico a través de nuestros test
+                interactivo.
+            </p>
+        </section>
+
+        <hr class="wireframe-divider">
+
+        <!-- Quiz 1: ¿Cuál de las 4 casas de Hogwarts soy? -->
+        <section style="text-align: center; margin-bottom: 35px;">
+            <h2 class="section-heading-books" style="text-align: center;">¿Querés saber cuál casa y que patronus
+                tendrías?</h2>
+            <button class="quiz-start-btn" id="quizStartBtn" type="button" aria-expanded="false"
+                aria-controls="quizCarouselWrapper">¡Comenzar!</button>
+
+            <!-- Carrusel de preguntas del Quiz (se despliega al presionar ¡Comenzar!) -->
+            <div class="quiz-carousel-wrapper is-hidden" id="quizCarouselWrapper" aria-live="polite">
+                <button class="carousel-nav-btn" id="quizPrevBtn" aria-label="Pregunta anterior"
+                    type="button">&#x3C;</button>
+                <div class="quiz-question-box" id="quizCard">
+                    <div class="quiz-header">
+                        <span class="quiz-counter" id="quizCounter">Pregunta 1 de 4</span>
+                        <h3 class="quiz-question-title" id="quizQuestionTitle">¿Qué preferís?</h3>
+                    </div>
+                    <div class="quiz-options-grid" id="quizOptionsGrid" role="group" aria-label="Opciones de respuesta">
+                        <div class="quiz-option-card" data-index="0" role="button" tabindex="0" aria-checked="false">
+                            <span class="option-label">a.</span>
+                            <span class="option-text">Noche</span>
+                        </div>
+                        <div class="quiz-option-card" data-index="1" role="button" tabindex="0" aria-checked="false">
+                            <span class="option-label">b.</span>
+                            <span class="option-text">Estrellas</span>
+                        </div>
+                        <div class="quiz-option-card" data-index="2" role="button" tabindex="0" aria-checked="false">
+                            <span class="option-label">c.</span>
+                            <span class="option-text">Día</span>
+                        </div>
+                        <div class="quiz-option-card" data-index="3" role="button" tabindex="0" aria-checked="false">
+                            <span class="option-label">d.</span>
+                            <span class="option-text">Sol</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-nav-btn" id="quizNextBtn" aria-label="Pregunta siguiente"
+                    type="button">&#x3E;</button>
+            </div>
+
+            <!-- Subtítulo de Quiz Finalizado y botones para desplegar resultados (solo aparecen al marcar todas las opciones) -->
+            <div class="quiz-finished-section is-hidden" id="quizFinishedSection">
+                <h3 class="quiz-finished-title">¡Quiz finalizado!</h3>
+                <p class="quiz-finished-caption">Ya podés consultar tus afinidades mágicas:</p>
+                <div class="quiz-actions-group">
+                    <button class="quiz-start-btn" id="btnDescubriCasa" type="button" aria-expanded="false"
+                        aria-controls="accordionCasasWrapper">Descubrí tu casa</button>
+                    <button class="quiz-start-btn" id="btnResetQuiz" type="button">Volver a hacerlo</button>
+                    <button class="quiz-start-btn" id="btnDescubriPatronus" type="button" aria-expanded="false"
+                        aria-controls="accordionPatronusWrapper">Descubrí tu patronus</button>
+                </div>
+            </div>
+
+            <!-- Acordeón 1: Descubrí tu Casa (se despliega con el botón Descubrí tu casa) -->
+            <div class="accordion-wrapper is-hidden" id="accordionCasasWrapper">
+                <h3 class="accordion-title-section">Tus afinidades con las Casas de Hogwarts</h3>
+                <div class="accordion" id="accordionCasas">
+                    <!-- Gryffindor (A) -->
+                    <details class="accordion-item" name="accordionCasasGroup" id="itemGryffindor">
+                        <summary class="accordion-header">
+                            <span><strong>Gryffindor</strong> &mdash; Valentía, temple y caballerosidad</span>
+                            <span class="resultado-slot" id="slotGryffindor"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Quienes pertenecen a Gryffindor se distinguen por su intrepidez, valor y disposición
+                                para defender a los demás sin importar las consecuencias. El Sombrero Seleccionador
+                                valora el coraje de aquellos con corazón audaz.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalGryffindor">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Ravenclaw (B) -->
+                    <details class="accordion-item" name="accordionCasasGroup" id="itemRavenclaw">
+                        <summary class="accordion-header">
+                            <span><strong>Ravenclaw</strong> &mdash; Sabiduría, agudeza y creatividad</span>
+                            <span class="resultado-slot" id="slotRavenclaw"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Ravenclaw premia el amor por el conocimiento, el pensamiento crítico y la originalidad.
+                                Para ingresar a su sala común no se necesita contraseña, sino descifrar un acertijo
+                                filosófico formulado por su aldaba de bronce.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalRavenclaw">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Hufflepuff (C) -->
+                    <details class="accordion-item" name="accordionCasasGroup" id="itemHufflepuff">
+                        <summary class="accordion-header">
+                            <span><strong>Hufflepuff</strong> &mdash; Lealtad, paciencia y juego limpio</span>
+                            <span class="resultado-slot" id="slotHufflepuff"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Hufflepuff es el hogar de los amigos más incondicionales y los magos más justos y
+                                trabajadores. Su sala común es cálida y acogedora, situada junto a las cocinas de
+                                Hogwarts, llena de plantas mágicas y luz dorada.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalHufflepuff">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Slytherin (D) -->
+                    <details class="accordion-item" name="accordionCasasGroup" id="itemSlytherin">
+                        <summary class="accordion-header">
+                            <span><strong>Slytherin</strong> &mdash; Ambición, astucia y liderazgo</span>
+                            <span class="resultado-slot" id="slotSlytherin"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Slytherin acoge a los magos con visión de grandeza, ingenio agudo y determinación
+                                inquebrantable para forjar su propio destino. Su sala común en las mazmorras ofrece
+                                vistas submarinas al Gran Lago.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalSlytherin">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Acordeón 2: Descubrí tu Patronus (se despliega con el botón Descubrí tu patronus) -->
+            <div class="accordion-wrapper is-hidden" id="accordionPatronusWrapper">
+                <h3 class="accordion-title-section">Tu Forma de Patronus Protector</h3>
+                <div class="accordion" id="accordionPatronus">
+                    <!-- Ciervo (A) -->
+                    <details class="accordion-item" name="accordionPatronusGroup" id="itemCiervo">
+                        <summary class="accordion-header">
+                            <span><strong>El ciervo</strong> &mdash; Protector incansable y espíritu noble
+                            </span>
+                            <span class="resultado-slot" id="slotCiervo"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                El ciervo corpóreo es el epítome de la luz y el coraje frente a la desesperanza. Emerge
+                                galopando con cornamenta luminosa para dispersar legiones enteras de Dementores.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalCiervo">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Águila (B) -->
+                    <details class="accordion-item" name="accordionPatronusGroup" id="itemAguila">
+                        <summary class="accordion-header">
+                            <span><strong>El águila</strong> &mdash; Visión lúcida y vuelo libre de la mente
+                            </span>
+                            <span class="resultado-slot" id="slotAguila"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Con alas plateadas que cortan las tinieblas, el águila asciende por encima de cualquier
+                                pesadumbre, revelando verdades y despejando la niebla mental de la desesperación.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalAguila">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Tejón (C) -->
+                    <details class="accordion-item" name="accordionPatronusGroup" id="itemTejon">
+                        <summary class="accordion-header">
+                            <span><strong>El tejón</strong> &mdash; Firmeza tenaz y lealtad incondicional
+                            </span>
+                            <span class="resultado-slot" id="slotTejon"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Paciente y calmo en tiempos de paz, pero ferozmente temible cuando sus amigos corren
+                                peligro. El tejón proyecta una muralla defensiva inexpugnable ante las fuerzas oscuras.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalTejon">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+
+                    <!-- Serpiente (D) -->
+                    <details class="accordion-item" name="accordionPatronusGroup" id="itemSerpiente">
+                        <summary class="accordion-header">
+                            <span><strong>La serpiente</strong> &mdash; Astucia táctica y poder regenerativo
+                            </span>
+                            <span class="resultado-slot" id="slotSerpiente"></span>
+                            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m2 5 6 6 6-6" />
+                            </svg>
+                        </summary>
+                        <div class="accordion-body">
+                            <p>
+                                Ondulando con elegancia y velocidad implacable, la serpiente plateada no se inmuta ante
+                                la frialdad del Dementor; la enfrenta con sigilo, determinación y precisión mortal.
+                            </p>
+                            <button class="btn-saber-mas" type="button" data-modal="modalSerpiente">Quiero saber
+                                más</button>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Modal Overlay para "Quiero saber más" (se abre por encima de la pantalla, tapando parte de ella) -->
+            <div class="magic-modal-overlay" id="magicModalOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+
+                <!-- Modal: Gryffindor -->
+                <div class="magic-modal-dialog is-hidden" id="modalGryffindor">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">Gryffindor</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="gry">
+                        <img src="../imgs/gry.jpg" alt="Gryffindor" class="modal-info-img" width="100">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Casa de los Valientes y Audaces</strong></p>
+                        <p>Quienes pertenecen a Gryffindor se distinguen por su intrepidez, valor y disposición para
+                            defender a los demás sin importar las consecuencias. El Sombrero Seleccionador valora el
+                            coraje de aquellos con corazón audaz.</p>
+                        <h4>Detalles mágicos de Gryffindor:</h4>
+                        <ul>
+                            <li><strong>Fundador:</strong> Godric Gryffindor.</li>
+                            <li><strong>Colores emblemáticos:</strong> Escarlata y dorado.</li>
+                            <li><strong>Animal representativo:</strong> El león dorado.</li>
+                            <li><strong>Elemento:</strong> Fuego.</li>
+                            <li><strong>Reliquia sagrada:</strong> La Espada de Godric Gryffindor.</li>
+                            <li><strong>Fantasma de la casa:</strong> Sir Nicholas de Mimsy-Porpington (Nick Casi
+                                Decapitado).</li>
+                            <li><strong>Miembros célebres:</strong> Harry Potter, Hermione Granger, Ron Weasley, Albus
+                                Dumbledore, Minerva McGonagall y Sirius Black.</li>
+                        </ul>
+                        <p class="modal-quote">"Puedes pertenecer a Gryffindor, donde habitan los valientes. Su osadía,
+                            temple y caballerosidad ponen aparte a los de Gryffindor."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Ravenclaw -->
+                <div class="magic-modal-dialog is-hidden" id="modalRavenclaw">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">Ravenclaw</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/rav.jpg" alt="Raveclaw" class="modal-info-img" width="100">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Casa de la Sabiduría y el Ingenio</strong></p>
+                        <p>Ravenclaw premia el amor por el conocimiento, el pensamiento crítico y la originalidad. Para
+                            ingresar a su sala común no se necesita contraseña, sino descifrar un acertijo filosófico
+                            formulado por su aldaba de bronce.</p>
+                        <h4>Detalles mágicos de Ravenclaw:</h4>
+                        <ul>
+                            <li><strong>Fundadora:</strong> Rowena Ravenclaw.</li>
+                            <li><strong>Colores emblemáticos:</strong> Azul y bronce.</li>
+                            <li><strong>Animal representativo:</strong> El águila majestuosa.</li>
+                            <li><strong>Elemento:</strong> Aire.</li>
+                            <li><strong>Reliquia sagrada:</strong> La Diadema perdida de Rowena Ravenclaw.</li>
+                            <li><strong>Fantasma de la casa:</strong> Helena Ravenclaw (La Dama Gris).</li>
+                            <li><strong>Miembros célebres:</strong> Luna Lovegood, Filius Flitwick, Cho Chang y Garrick
+                                Ollivander.</li>
+                        </ul>
+                        <p class="modal-quote">"O tal vez a la sabia y antigua Ravenclaw, si tienes una mente dispuesta,
+                            porque los de inteligencia y erudición siempre encontrarán allí a sus semejantes."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Hufflepuff -->
+                <div class="magic-modal-dialog is-hidden" id="modalHufflepuff">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">Hufflepuff</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/huff.jpg" alt="Hufflepuff - Imagen seleccionada" class="modal-info-img" width="100">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Casa de la Lealtad y el Trabajo Justo</strong></p>
+                        <p>Hufflepuff es el hogar de los amigos más incondicionales y los magos más justos y
+                            trabajadores. Su sala común es cálida y acogedora, situada junto a las cocinas de Hogwarts,
+                            llena de plantas mágicas y luz dorada.</p>
+                        <h4>Detalles mágicos de Hufflepuff:</h4>
+                        <ul>
+                            <li><strong>Fundadora:</strong> Helga Hufflepuff.</li>
+                            <li><strong>Colores emblemáticos:</strong> Amarillo y negro.</li>
+                            <li><strong>Animal representativo:</strong> El tejón noble.</li>
+                            <li><strong>Elemento:</strong> Tierra.</li>
+                            <li><strong>Reliquia sagrada:</strong> La Copa de Helga Hufflepuff.</li>
+                            <li><strong>Fantasma de la casa:</strong> El Fraile Gordo.</li>
+                            <li><strong>Miembros célebres:</strong> Newt Scamander, Cedric Diggory, Nymphadora Tonks y
+                                Pomona Sprout.</li>
+                        </ul>
+                        <p class="modal-quote">"Puedes pertenecer a Hufflepuff, donde son justos y leales. Esos
+                            perseverantes de Hufflepuff de verdad que no temen al trabajo pesado."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Slytherin -->
+                <div class="magic-modal-dialog is-hidden" id="modalSlytherin">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">Slytherin</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/sly.jpg" alt="Slytherin" class="modal-info-img" width="100">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Casa de la Ambición y la Astucia</strong></p>
+                        <p>Slytherin acoge a los magos con visión de grandeza, ingenio agudo y determinación
+                            inquebrantable para forjar su propio destino. Su sala común en las mazmorras ofrece vistas
+                            submarinas al Gran Lago.</p>
+                        <h4>Detalles mágicos de Slytherin:</h4>
+                        <ul>
+                            <li><strong>Fundador:</strong> Salazar Slytherin.</li>
+                            <li><strong>Colores emblemáticos:</strong> Verde esmeralda y plata.</li>
+                            <li><strong>Animal representativo:</strong> La serpiente astuta.</li>
+                            <li><strong>Elemento:</strong> Agua.</li>
+                            <li><strong>Reliquia sagrada:</strong> El Guardapelo de Salazar Slytherin.</li>
+                            <li><strong>Fantasma de la casa:</strong> El Barón Sanguinario.</li>
+                            <li><strong>Miembros célebres:</strong> Severus Snape, Merlin, Draco Malfoy, Regulus Black y
+                                Horace Slughorn.</li>
+                        </ul>
+                        <p class="modal-quote">"O tal vez en Slytherin harás tus verdaderos amigos. Esa gente astuta
+                            utiliza cualquier medio para lograr sus fines."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Ciervo -->
+                <div class="magic-modal-dialog is-hidden" id="modalCiervo">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">El Ciervo</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/ciervo.jpg" alt="Patronus Ciervo - Imagen seleccionada" class="modal-info-img" width="100">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Protector incansable y espíritu noble</strong></p>
+                        <p>El Ciervo corpóreo es el epítome de la luz y el coraje frente a la desesperanza. Emerge
+                            galopando con cornamenta luminosa para dispersar legiones enteras de Dementores.</p>
+                        <h4>Misterios del Patronus Ciervo:</h4>
+                        <ul>
+                            <li><strong>Naturaleza mágica:</strong> Representa el amor protector incondicional y el
+                                instinto de salvaguardar a quienes amas aun arriesgando tu propia vida.</li>
+                            <li><strong>Afinidad espiritual:</strong> Vinculado fuertemente a la energía valiente de
+                                Gryffindor.</li>
+                            <li><strong>Portadores legendarios:</strong> Harry Potter y James Potter (Cornamenta). Su
+                                contraparte femenina es la Cierva plateada, invocada por Severus Snape y Lily Potter.
+                            </li>
+                            <li><strong>Secreto de invocación:</strong> Nace de los recuerdos donde el afecto y la
+                                valentía triunfaron sobre el miedo absoluto.</li>
+                        </ul>
+                        <p class="modal-quote">"Un ciervo plateado emergió de la varita, brillante como la luna nueva,
+                            iluminando la orilla del lago helado..."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Águila -->
+                <div class="magic-modal-dialog is-hidden" id="modalAguila">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">El Águila</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/aguila.jpg" alt="Patronus Águila" class="modal-info-img">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Visión lúcida y vuelo libre de la mente</strong></p>
+                        <p>Con alas plateadas que cortan las tinieblas, el Águila asciende por encima de cualquier
+                            pesadumbre, revelando verdades y despejando la niebla mental de la desesperación.</p>
+                        <h4>Misterios del Patronus Águila:</h4>
+                        <ul>
+                            <li><strong>Naturaleza mágica:</strong> Simboliza una perspectiva inalcanzable, la sed
+                                insaciable de libertad y la agudeza intuitiva ante cualquier dilema.</li>
+                            <li><strong>Afinidad espiritual:</strong> Muy cercano al intelecto y curiosidad sin límites
+                                de Ravenclaw.</li>
+                            <li><strong>Portadores destacados:</strong> Magos y brujas con gran capacidad de análisis,
+                                pensadores originales y astrónomos del mundo mágico.</li>
+                            <li><strong>Secreto de invocación:</strong> Se nutre del recuerdo de haber descubierto una
+                                verdad oculta o haber roto las barreras de lo convencional.</li>
+                        </ul>
+                        <p class="modal-quote">"La criatura alada batió sus alas de pura luz plateada, surcando los
+                            cielos y ahuyentando las sombras heladas."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Tejón -->
+                <div class="magic-modal-dialog is-hidden" id="modalTejon">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">El Tejón</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/tejon.jpg" alt="Patronus tejón" class="modal-info-img">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Firmeza tenaz y lealtad incondicional</strong></p>
+                        <p>Paciente y calmo en tiempos de paz, pero ferozmente temible cuando sus amigos corren peligro.
+                            El Tejón proyecta una muralla defensiva inexpugnable ante las fuerzas oscuras.</p>
+                        <h4>Misterios del Patronus Tejón:</h4>
+                        <ul>
+                            <li><strong>Naturaleza mágica:</strong> Representa la bondad genuina, la resistencia ante la
+                                adversidad y la ferocidad protectora de quien no abandona jamás a los suyos.</li>
+                            <li><strong>Afinidad espiritual:</strong> La máxima expresión del corazón sincero y
+                                trabajador de Hufflepuff.</li>
+                            <li><strong>Portadores destacados:</strong> Brujas y magos reconocidos por su calidez
+                                humana, su devoción inquebrantable a sus familias y su integridad moral.</li>
+                            <li><strong>Secreto de invocación:</strong> Emerge del recuerdo reconfortante de sentirse en
+                                casa, rodeado de seres queridos y en paz interior.</li>
+                        </ul>
+                        <p class="modal-quote">"De paso firme y postura indoblegable, el tejón plateado se plantó entre
+                            el mago y el frío espectral."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+                <!-- Modal: Serpiente -->
+                <div class="magic-modal-dialog is-hidden" id="modalSerpiente">
+                    <button class="modal-close-btn" type="button" aria-label="Cerrar ventana">&times;</button>
+                    <h3 class="modal-dialog-title">La serpiente</h3>
+
+                    <!-- Espacio para la imagen seleccionada por el usuario -->
+                    <div class="modal-img-container">
+                        <img src="../imgs/serpiente.jpg" alt="Patronus Serpiente" class="modal-info-img">
+                    </div>
+
+                    <div class="modal-dialog-content">
+                        <p><strong>Astucia táctica y poder regenerativo</strong></p>
+                        <p>Ondulando con elegancia y velocidad implacable, la Serpiente plateada no se inmuta ante la
+                            frialdad del Dementor; la enfrenta con sigilo, determinación y precisión mortal.</p>
+                        <h4>Misterios del Patronus Serpiente:</h4>
+                        <ul>
+                            <li><strong>Naturaleza mágica:</strong> Rara y poderosa forma que denota un espíritu
+                                adaptable, de mente penetrante, orgullo férreo y capacidad de renacer tras las caídas.
+                            </li>
+                            <li><strong>Afinidad espiritual:</strong> La cúspide de la sagacidad y el temple de
+                                Slytherin.</li>
+                            <li><strong>Portadores destacados:</strong> Líderes con gran fuerza de voluntad, estrategas
+                                y magos con conexiones a las artes mágicas ancestrales.</li>
+                            <li><strong>Secreto de invocación:</strong> Nace del recuerdo de haber triunfado contra todo
+                                pronóstico gracias a la inteligencia y convicción propia.</li>
+                        </ul>
+                        <p class="modal-quote">"La serpiente de vapor argénteo trazó un círculo protector a su
+                            alrededor, deslumbrando a las sombras."</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 18px;">
+                        <button class="quiz-start-btn modal-bottom-close" type="button">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="wireframe-footer">
+        <div class="wireframe-footer-inner">
+            <p class="footer-copy">&copy; 2026 Snitch Club. &mdash;
+                Todos los derechos reservados.
+            </p>
+
+            <ul class="footer-social-links" aria-label="Redes sociales">
+                <li>
+                    <a href="https://www.instagram.com/harrypotter/?hl=es" class="footer-social-link" title="Instagram"
+                        aria-label="Instagram" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/harrypotter/?locale=es_LA" class="footer-social-link"
+                        title="Facebook" aria-label="Facebook" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/harrypotter" class="footer-social-link" title="X" aria-label="X"
+                        target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="footer-quote">
+                &ldquo;Las palabras son, en mi no tan humilde opinión, nuestra más inagotable fuente de magia.&rdquo;
+                &mdash; Albus Dumbledore
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
+    <script src="../js/nav.js"></script>
+    <script>
+        // Quiz Carrusel interactivo: ¿Cuál de las 4 casas de Hogwarts soy?
+        const quizQuestions = [
+            {
+                title: "¿Qué preferís?",
+                options: [
+                    { label: "a.", text: "Noche" },
+                    { label: "b.", text: "Estrellas" },
+                    { label: "c.", text: "Día" },
+                    { label: "d.", text: "Sol" }
+                ]
+            },
+            {
+                title: "¿Qué cualidad valorás más en vos?",
+                options: [
+                    { label: "a.", text: "Valentía y coraje" },
+                    { label: "b.", text: "Sabiduría y curiosidad" },
+                    { label: "c.", text: "Lealtad y paciencia" },
+                    { label: "d.", text: "Ambición y astucia" }
+                ]
+            },
+            {
+                title: "¿Qué criatura mágica elegirías de compañera?",
+                options: [
+                    { label: "a.", text: "Fénix noble" },
+                    { label: "b.", text: "Búho erudito" },
+                    { label: "c.", text: "Hipogrifo leal" },
+                    { label: "d.", text: "Serpiente astuta" }
+                ]
+            },
+            {
+                title: "Ante un gran desafío en Hogwarts, vos...",
+                options: [
+                    { label: "a.", text: "Avanzás con determinación" },
+                    { label: "b.", text: "Investigás en la biblioteca" },
+                    { label: "c.", text: "Buscás unir al grupo" },
+                    { label: "d.", text: "Buscás una ventaja clave" }
+                ]
+            }
+        ];
+
+        let quizCurrentIndex = 0;
+        const userAnswers = {}; // Se llena a medida que el usuario responde cada pregunta
+
+        const quizStartBtn = document.getElementById("quizStartBtn");
+        const quizCarouselWrapper = document.getElementById("quizCarouselWrapper");
+        const quizPrevBtn = document.getElementById("quizPrevBtn");
+        const quizNextBtn = document.getElementById("quizNextBtn");
+        const quizCard = document.getElementById("quizCard");
+        const quizCounter = document.getElementById("quizCounter");
+        const quizQuestionTitle = document.getElementById("quizQuestionTitle");
+        const quizOptionsGrid = document.getElementById("quizOptionsGrid");
+
+        // Desplegar el carrusel al presionar el botón Comenzar
+        quizStartBtn?.addEventListener("click", () => {
+            const isHidden = quizCarouselWrapper.classList.contains("is-hidden");
+            if (isHidden) {
+                quizCarouselWrapper.classList.remove("is-hidden");
+                quizCarouselWrapper.classList.add("is-visible");
+                quizStartBtn.setAttribute("aria-expanded", "true");
+                quizStartBtn.textContent = "Ocultar quiz";
+                renderQuizQuestion();
+                quizCarouselWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else {
+                quizCarouselWrapper.classList.remove("is-visible");
+                quizCarouselWrapper.classList.add("is-hidden");
+                quizStartBtn.setAttribute("aria-expanded", "false");
+                quizStartBtn.textContent = "¡Comenzar!";
+            }
+        });
+
+        function renderQuizQuestion() {
+            const currentQ = quizQuestions[quizCurrentIndex];
+            if (!currentQ) return;
+
+            if (quizCounter) {
+                quizCounter.textContent = `Pregunta ${quizCurrentIndex + 1} de ${quizQuestions.length}`;
+            }
+
+            if (quizQuestionTitle) {
+                quizQuestionTitle.textContent = currentQ.title;
+            }
+
+            if (quizOptionsGrid) {
+                quizOptionsGrid.innerHTML = "";
+                currentQ.options.forEach((opt, idx) => {
+                    const card = document.createElement("div");
+                    const isSelected = userAnswers[quizCurrentIndex] === idx;
+                    card.className = "quiz-option-card" + (isSelected ? " selected" : "");
+                    card.setAttribute("role", "button");
+                    card.setAttribute("tabindex", "0");
+                    card.setAttribute("aria-checked", isSelected ? "true" : "false");
+
+                    const labelSpan = document.createElement("span");
+                    labelSpan.className = "option-label";
+                    labelSpan.textContent = opt.label;
+
+                    const textSpan = document.createElement("span");
+                    textSpan.className = "option-text";
+                    textSpan.textContent = opt.text;
+
+                    card.appendChild(labelSpan);
+                    card.appendChild(textSpan);
+
+                    card.addEventListener("click", () => {
+                        selectQuizOption(idx);
+                    });
+
+                    card.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            selectQuizOption(idx);
+                        }
+                    });
+
+                    quizOptionsGrid.appendChild(card);
+                });
+            }
+        }
+
+        // Verifica si se han respondido todas las preguntas para mostrar el subtítulo y los botones
+        function checkQuizCompletion() {
+            const totalQuestions = quizQuestions.length;
+            const answeredCount = Object.keys(userAnswers).length;
+            const quizFinishedSection = document.getElementById("quizFinishedSection");
+
+            if (answeredCount === totalQuestions) {
+                if (quizFinishedSection && quizFinishedSection.classList.contains("is-hidden")) {
+                    quizFinishedSection.classList.remove("is-hidden");
+                    quizFinishedSection.classList.add("is-visible");
+                    quizFinishedSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            } else {
+                if (quizFinishedSection) {
+                    quizFinishedSection.classList.add("is-hidden");
+                    quizFinishedSection.classList.remove("is-visible");
+                }
+            }
+        }
+
+        function selectQuizOption(index) {
+            userAnswers[quizCurrentIndex] = index;
+            const optionCards = quizOptionsGrid?.querySelectorAll(".quiz-option-card");
+            optionCards?.forEach((card, idx) => {
+                const isSelected = idx === index;
+                card.classList.toggle("selected", isSelected);
+                card.setAttribute("aria-checked", isSelected ? "true" : "false");
+            });
+
+            checkQuizCompletion();
+
+            // Si los acordeones están abiertos, actualizamos el resultado en tiempo real
+            if (!accordionCasasWrapper?.classList.contains("is-hidden")) {
+                updateCasasResult();
+            }
+            if (!accordionPatronusWrapper?.classList.contains("is-hidden")) {
+                updatePatronusResult();
+            }
+        }
+
+        function navigateQuiz(direction) {
+            if (direction === "prev") {
+                quizCurrentIndex = (quizCurrentIndex - 1 + quizQuestions.length) % quizQuestions.length;
+            } else {
+                quizCurrentIndex = (quizCurrentIndex + 1) % quizQuestions.length;
+            }
+
+            if (quizCard) {
+                quizCard.style.opacity = "0";
+                quizCard.style.transform = direction === "next" ? "translateX(8px)" : "translateX(-8px)";
+                setTimeout(() => {
+                    renderQuizQuestion();
+                    quizCard.style.transform = direction === "next" ? "translateX(-8px)" : "translateX(8px)";
+                    void quizCard.offsetWidth; // Forzar reflujo
+                    quizCard.style.opacity = "1";
+                    quizCard.style.transform = "translateX(0)";
+                }, 140);
+            } else {
+                renderQuizQuestion();
+            }
+        }
+
+        quizPrevBtn?.addEventListener("click", () => navigateQuiz("prev"));
+        quizNextBtn?.addEventListener("click", () => navigateQuiz("next"));
+
+        // Lógica de cálculo de resultados según respuestas (A, B, C, D)
+        function getPredominantOption() {
+            const counts = { 0: 0, 1: 0, 2: 0, 3: 0 };
+            Object.values(userAnswers).forEach(val => {
+                if (counts[val] !== undefined) counts[val]++;
+            });
+            let maxIdx = 0;
+            let maxCount = -1;
+            for (let i = 0; i < 4; i++) {
+                if (counts[i] > maxCount) {
+                    maxCount = counts[i];
+                    maxIdx = i;
+                }
+            }
+            return maxIdx; // 0: A, 1: B, 2: C, 3: D
+        }
+
+        const casasData = [
+            { id: "itemGryffindor", slot: "slotGryffindor", name: "Gryffindor" },
+            { id: "itemRavenclaw", slot: "slotRavenclaw", name: "Ravenclaw" },
+            { id: "itemHufflepuff", slot: "slotHufflepuff", name: "Hufflepuff" },
+            { id: "itemSlytherin", slot: "slotSlytherin", name: "Slytherin" }
+        ];
+
+        const patronusData = [
+            { id: "itemCiervo", slot: "slotCiervo", name: "El Ciervo" },
+            { id: "itemAguila", slot: "slotAguila", name: "El Águila" },
+            { id: "itemTejon", slot: "slotTejon", name: "El Tejón" },
+            { id: "itemSerpiente", slot: "slotSerpiente", name: "La Serpiente" }
+        ];
+
+        function updateCasasResult() {
+            const winner = getPredominantOption();
+            casasData.forEach((casa, idx) => {
+                const itemEl = document.getElementById(casa.id);
+                const slotEl = document.getElementById(casa.slot);
+                if (slotEl) {
+                    if (idx === winner) {
+                        slotEl.innerHTML = '<span class="badge-tu-resultado">¡Tu Casa Seleccionada!</span>';
+                    } else {
+                        slotEl.innerHTML = '';
+                    }
+                }
+                if (itemEl) {
+                    itemEl.open = (idx === winner);
+                }
+            });
+        }
+
+        function updatePatronusResult() {
+            const winner = getPredominantOption();
+            patronusData.forEach((pat, idx) => {
+                const itemEl = document.getElementById(pat.id);
+                const slotEl = document.getElementById(pat.slot);
+                if (slotEl) {
+                    if (idx === winner) {
+                        slotEl.innerHTML = '<span class="badge-tu-resultado">¡Tu Patronus Invocado!</span>';
+                    } else {
+                        slotEl.innerHTML = '';
+                    }
+                }
+                if (itemEl) {
+                    itemEl.open = (idx === winner);
+                }
+            });
+        }
+
+        // Botones de despliegue de los dos acordeones
+        const btnDescubriCasa = document.getElementById("btnDescubriCasa");
+        const accordionCasasWrapper = document.getElementById("accordionCasasWrapper");
+        const btnDescubriPatronus = document.getElementById("btnDescubriPatronus");
+        const accordionPatronusWrapper = document.getElementById("accordionPatronusWrapper");
+
+        btnDescubriCasa?.addEventListener("click", () => {
+            const isHidden = accordionCasasWrapper.classList.contains("is-hidden");
+            if (isHidden) {
+                updateCasasResult();
+                accordionCasasWrapper.classList.remove("is-hidden");
+                accordionCasasWrapper.classList.add("is-visible");
+                btnDescubriCasa.setAttribute("aria-expanded", "true");
+                btnDescubriCasa.textContent = "Ocultar casa";
+                accordionCasasWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else {
+                accordionCasasWrapper.classList.remove("is-visible");
+                accordionCasasWrapper.classList.add("is-hidden");
+                btnDescubriCasa.setAttribute("aria-expanded", "false");
+                btnDescubriCasa.textContent = "Descubrí tu casa";
+            }
+        });
+
+        btnDescubriPatronus?.addEventListener("click", () => {
+            const isHidden = accordionPatronusWrapper.classList.contains("is-hidden");
+            if (isHidden) {
+                updatePatronusResult();
+                accordionPatronusWrapper.classList.remove("is-hidden");
+                accordionPatronusWrapper.classList.add("is-visible");
+                btnDescubriPatronus.setAttribute("aria-expanded", "true");
+                btnDescubriPatronus.textContent = "Ocultar patronus";
+                accordionPatronusWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else {
+                accordionPatronusWrapper.classList.remove("is-visible");
+                accordionPatronusWrapper.classList.add("is-hidden");
+                btnDescubriPatronus.setAttribute("aria-expanded", "false");
+                btnDescubriPatronus.textContent = "Descubrí tu patronus";
+            }
+        });
+
+        // Botón para reiniciar y volver a hacer el quiz
+        const btnResetQuiz = document.getElementById("btnResetQuiz");
+
+        btnResetQuiz?.addEventListener("click", () => {
+            // Vaciar respuestas
+            for (const key in userAnswers) {
+                delete userAnswers[key];
+            }
+            quizCurrentIndex = 0;
+            renderQuizQuestion();
+
+            // Ocultar sección finalizada y acordeones
+            const quizFinishedSection = document.getElementById("quizFinishedSection");
+            quizFinishedSection?.classList.add("is-hidden");
+            quizFinishedSection?.classList.remove("is-visible");
+
+            accordionCasasWrapper?.classList.add("is-hidden");
+            accordionCasasWrapper?.classList.remove("is-visible");
+            if (btnDescubriCasa) {
+                btnDescubriCasa.setAttribute("aria-expanded", "false");
+                btnDescubriCasa.textContent = "Descubrí tu casa";
+            }
+
+            accordionPatronusWrapper?.classList.add("is-hidden");
+            accordionPatronusWrapper?.classList.remove("is-visible");
+            if (btnDescubriPatronus) {
+                btnDescubriPatronus.setAttribute("aria-expanded", "false");
+                btnDescubriPatronus.textContent = "Descubrí tu patronus";
+            }
+
+            // Limpiar badges y cerrar acordeones
+            casasData.forEach(casa => {
+                const slot = document.getElementById(casa.slot);
+                const item = document.getElementById(casa.id);
+                if (slot) slot.innerHTML = "";
+                if (item) item.open = false;
+            });
+            patronusData.forEach(pat => {
+                const slot = document.getElementById(pat.slot);
+                const item = document.getElementById(pat.id);
+                if (slot) slot.innerHTML = "";
+                if (item) item.open = false;
+            });
+
+            // Si el carrusel de preguntas estuviera cerrado, lo mostramos
+            if (quizCarouselWrapper?.classList.contains("is-hidden")) {
+                quizCarouselWrapper.classList.remove("is-hidden");
+                quizCarouselWrapper.classList.add("is-visible");
+                if (quizStartBtn) {
+                    quizStartBtn.setAttribute("aria-expanded", "true");
+                    quizStartBtn.textContent = "Ocultar quiz";
+                }
+            }
+
+            // Scroll suave hacia la primera pregunta
+            quizCarouselWrapper?.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+
+        // Lógica del modal superpuesto para "Quiero saber más"
+        const magicModalOverlay = document.getElementById("magicModalOverlay");
+
+        function openModal(modalId) {
+            const modalDialog = document.getElementById(modalId);
+            if (!modalDialog || !magicModalOverlay) return;
+
+            // Ocultar cualquier otro modal abierto dentro del overlay
+            magicModalOverlay.querySelectorAll(".magic-modal-dialog").forEach(d => {
+                d.classList.add("is-hidden");
+            });
+
+            modalDialog.classList.remove("is-hidden");
+            magicModalOverlay.classList.add("is-active");
+            magicModalOverlay.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden"; // Evitar scroll del fondo
+        }
+
+        function closeModal() {
+            if (!magicModalOverlay) return;
+            magicModalOverlay.classList.remove("is-active");
+            magicModalOverlay.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+            magicModalOverlay.querySelectorAll(".magic-modal-dialog").forEach(d => {
+                d.classList.add("is-hidden");
+            });
+        }
+
+        // Manejador para los botones "Quiero saber más"
+        document.querySelectorAll(".btn-saber-mas").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const targetModal = btn.getAttribute("data-modal");
+                if (targetModal) {
+                    openModal(targetModal);
+                }
+            });
+        });
+
+        // Botones de cierre dentro de cada modal (cruz superior y botón cerrar inferior)
+        magicModalOverlay?.querySelectorAll(".modal-close-btn, .modal-bottom-close").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closeModal();
+            });
+        });
+
+        // Cerrar al hacer clic en el fondo oscuro fuera del recuadro
+        magicModalOverlay?.addEventListener("click", (e) => {
+            if (e.target === magicModalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Cerrar con la tecla Escape
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && magicModalOverlay?.classList.contains("is-active")) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

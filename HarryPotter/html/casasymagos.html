@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Casas y magos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* ==========================================================================
+           Cromos de Ranas de Chocolate / Carrusel de Personajes
+           ========================================================================== */
+        .frog-carousel-section {
+            margin: 25px 0 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .frog-carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            position: relative;
+        }
+
+        .frog-nav-btn {
+            background-color: rgba(253, 248, 238, 0.92);
+            border: 1px solid rgba(47, 32, 51, 0.25);
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            line-height: 1;
+            color: var(--color-ink-dark);
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(29, 27, 38, 0.12);
+        }
+
+        .frog-nav-btn:hover {
+            color: #DFBA6E;
+            background-color: var(--color-nav-bg);
+            border-color: var(--color-gold);
+            transform: scale(1.12);
+            box-shadow: 0 6px 15px rgba(29, 27, 38, 0.25);
+        }
+
+        .frog-nav-btn:active {
+            transform: scale(0.94);
+        }
+
+        .frog-carousel-viewport {
+            overflow: hidden;
+            width: 100%;
+            max-width: 698px;
+            padding: 18px 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .frog-carousel-track {
+            display: flex;
+            gap: 15px;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+            align-items: center;
+        }
+
+        /* Escena 3D de cada carta pentagonal */
+        .frog-card-scene {
+            flex: 0 0 220px;
+            width: 220px;
+            height: 290px;
+            perspective: 1200px;
+            filter: drop-shadow(0 10px 18px rgba(29, 27, 38, 0.35));
+            transition: filter 0.35s ease, transform 0.35s ease;
+            box-sizing: border-box;
+        }
+
+        .frog-card-scene:hover {
+            filter: drop-shadow(0 14px 24px rgba(29, 27, 38, 0.48)) drop-shadow(0 0 10px rgba(223, 186, 110, 0.35));
+        }
+
+        /* Tarjeta volteable en 3D */
+        .frog-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.34, 1.25, 0.64, 1);
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+        }
+
+        .frog-card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Caras de la carta (Forma pentagonal de rana de chocolate) */
+        .frog-card-face {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            background: linear-gradient(145deg, #FFE89E 0%, #C5A059 35%, #7D5B18 70%, #DFBA6E 100%);
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        .frog-card-inner-frame {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            background: radial-gradient(circle at 50% 30%, #2A2238 0%, #171424 75%, #0F0D17 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 22px 14px 10px 14px;
+            color: var(--color-ink-light);
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Cara Frontal (Foto del Personaje) */
+        .frog-card-front {
+            transform: rotateY(0deg) translateZ(1px);
+        }
+
+        .frog-card-top-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 2px;
+        }
+
+        .frog-card-series {
+            font-family: var(--font-serif);
+            font-size: 0.58rem;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            color: #DFBA6E;
+            text-transform: uppercase;
+        }
+
+        .frog-star {
+            color: #FFDF79;
+            font-size: 0.58rem;
+        }
+
+        /* Foto dentro de la forma de carta */
+        .frog-card-photo {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            border: 3px solid #DFBA6E;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.75), 0 5px 14px rgba(0, 0, 0, 0.45);
+            margin: 4px auto 6px auto;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(140deg, #372B47 0%, #1C1527 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .frog-card:hover .frog-card-photo {
+            border-color: #FFE699;
+            transform: scale(1.05);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 14px rgba(223, 186, 110, 0.5);
+        }
+
+        .frog-photo-art {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #DFBA6E;
+        }
+
+        .frog-photo-art svg {
+            width: 66px;
+            height: 66px;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .frog-card:hover .frog-photo-art svg {
+            transform: scale(1.08);
+        }
+
+        .frog-card-photo img,
+        .frog-photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 50%;
+            transition: transform 0.35s ease;
+        }
+
+        .frog-card:hover .frog-card-photo img,
+        .frog-card:hover .frog-photo-img {
+            transform: scale(1.08);
+        }
+
+        .frog-card-direct-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 14px;
+            transition: transform 0.35s ease;
+        }
+
+        .frog-card:hover .frog-card-direct-img {
+            transform: scale(1.04);
+        }
+
+        .frog-photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(15, 13, 23, 0.94) 0%, rgba(15, 13, 23, 0) 100%);
+            padding: 4px 0 2px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .frog-flip-hint {
+            font-size: 0.54rem;
+            color: #FFE699;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .frog-character-name {
+            font-family: var(--font-serif);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin: 2px 0 3px 0;
+            line-height: 1.15;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            white-space: nowrap;
+            max-width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .frog-house-badge {
+            display: inline-block;
+            font-size: 0.54rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            padding: 1px 7px;
+            border-radius: 12px;
+            margin-bottom: 2px;
+        }
+
+        .frog-click-prompt {
+            font-size: 0.54rem;
+            color: #C5A059;
+            letter-spacing: 0.3px;
+            opacity: 0.9;
+            transition: color 0.2s ease;
+        }
+
+        .frog-card:hover .frog-click-prompt {
+            color: #FFE699;
+        }
+
+        /* Colores temáticos de casas */
+        .house-gryffindor {
+            background-color: rgba(116, 0, 1, 0.32);
+            color: #F8B838;
+            border: 1px solid rgba(248, 184, 56, 0.45);
+        }
+
+        .house-slytherin {
+            background-color: rgba(26, 71, 42, 0.35);
+            color: #74D892;
+            border: 1px solid rgba(116, 216, 146, 0.45);
+        }
+
+        .house-ravenclaw {
+            background-color: rgba(14, 26, 64, 0.38);
+            color: #92B5F8;
+            border: 1px solid rgba(146, 181, 248, 0.45);
+        }
+
+        .house-hufflepuff {
+            background-color: rgba(236, 185, 57, 0.25);
+            color: #FFDE7A;
+            border: 1px solid rgba(255, 222, 122, 0.45);
+        }
+
+        /* Cara Trasera (Características y Datos del Personaje) */
+        .frog-card-back {
+            transform: rotateY(180deg) translateZ(1px);
+            background: linear-gradient(145deg, #FFE89E 0%, #DFBA6E 35%, #8B651B 70%, #C5A059 100%);
+        }
+
+        .frog-card-inner-frame.back-frame {
+            background: radial-gradient(circle at 50% 40%, #241D30 0%, #171322 75%, #0E0C15 100%);
+            padding: 8px 6px 4px 6px;
+            justify-content: space-between;
+        }
+
+        .frog-back-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 1px;
+        }
+
+        .frog-character-name-back {
+            font-family: var(--font-serif);
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #FFDF79;
+            margin: 0;
+            line-height: 1.15;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            max-width: 92%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .frog-character-title {
+            font-size: 0.56rem;
+            color: #DFBA6E;
+            font-style: italic;
+            margin: 0 0 1px 0;
+            line-height: 1.15;
+        }
+
+        .frog-card-divider {
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(223, 186, 110, 0.6), transparent);
+            margin: 1px auto;
+        }
+
+        .frog-character-desc {
+            font-size: 0.56rem;
+            line-height: 1.3;
+            color: #EAE3D2;
+            text-align: center;
+            
+            padding: 0 4px;
+            font-family: var(--font-sans);
+            max-width: 195px;
+        }
+
+        .frog-character-traits {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            padding: 3px 6px;
+            margin: 2px auto;
+            font-size: 0.53rem;
+            line-height: 1.25;
+            text-align: left;
+            width: 100%;
+            max-width: 185px;
+            box-sizing: border-box;
+        }
+
+        .frog-trait-item {
+            color: #D3C9B8;
+        }
+
+        .frog-trait-item strong {
+            color: #DFBA6E;
+        }
+
+        .frog-back-footer {
+            margin-bottom: 2px;
+        }
+
+        .frog-flip-return-hint {
+            font-size: 0.52rem;
+            color: #DFBA6E;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .frog-card:hover .frog-flip-return-hint {
+            color: #FFE699;
+            text-decoration: underline;
+        }
+
+        /* Controles, Indicadores y Contador */
+        .frog-carousel-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .frog-carousel-indicators {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .frog-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(47, 32, 51, 0.25);
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.25s ease;
+        }
+
+        .frog-dot:hover {
+            background-color: var(--color-gold);
+            transform: scale(1.2);
+        }
+
+        .frog-dot.active {
+            background-color: var(--color-nav-bg);
+            border-color: var(--color-gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 6px rgba(223, 186, 110, 0.6);
+        }
+
+        .frog-carousel-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--color-ink-muted);
+        }
+
+        .frog-counter {
+            font-weight: 700;
+            color: var(--color-ink-dark);
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+        }
+
+        .frog-hint-text {
+            font-size: 0.82rem;
+            color: var(--color-ink-muted);
+            font-style: italic;
+        }
+
+        .frog-hint-icon {
+            color: var(--color-gold);
+            font-style: normal;
+        }
+
+        /* Responsive */
+        @media (max-width: 840px) {
+            .frog-carousel-viewport {
+                max-width: 465px; /* 2 cartas en tablets intermedias */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .frog-carousel-viewport {
+                max-width: 230px; /* 1 carta en móviles */
+            }
+            .frog-nav-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.8rem;
+            }
+            .frog-hint-text {
+                font-size: 0.76rem;
+                text-align: center;
+            }
+        }
+        .houses-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .house-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .house-card-box {
+            background-color: var(--color-card-dark);
+            border-radius: 14px;
+            height: 160px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-ink-light);
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            box-shadow: 0 8px 20px rgba(29, 27, 38, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="wireframe-header">
+        <div class="wireframe-header-inner">
+            <a href="../index.html" class="brand-name">
+                 <img src="../imgs/logo.png" alt="Snitch Club" width="50">
+                <span>Snitch Club</span>
+            </a>
+            <div class="search-box-wrapper">
+                <span class="search-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="search" class="search-input" placeholder="Search" aria-label="Buscar">
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Navegación -->
+    <nav class="wireframe-nav-bar" aria-label="Navegación principal">
+        <div class="wireframe-nav-inner">
+            <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navMenu">
+                <span class="hamburger-title">Menú de Navegación</span>
+                <span class="hamburger-icon" aria-hidden="true">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </span>
+            </button>
+
+            <ul class="wireframe-nav-list" id="navMenu">
+                <li class="wireframe-nav-item">
+                    <a href="../index.html" class="wireframe-nav-link">Home</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="casasymagos.html" class="wireframe-nav-link active" aria-current="page">Casas y magos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="historiayconflictos.html" class="wireframe-nav-link">Historia y conflictos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="descubritumagia.html" class="wireframe-nav-link">Descubrí tu magia</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido -->
+    <main class="wireframe-main-content">
+        <!-- Personajes principales -->
+        <section class="intro-section" style="text-align: center;">
+            <h1 class="intro-title" style="text-align: center;">Personajes principales
+                
+            </h1>
+            <p class="intro-paragraph" style="text-align: justify; margin: 0;">
+                A lo largo de las páginas y la gran pantalla, un inolvidable elenco de personajes forjó la historia de la hechicería. Magos valientes, mentores sabios y figuras enigmáticas que dejaron su huella imborrable en Hogwarts.
+            </p>
+
+            <!-- Carrusel de figuras pentagonales (Cromos de Magos / Ranas de Chocolate) -->
+            <div class="frog-carousel-section">
+                <div class="frog-carousel-container" aria-label="Carrusel de personajes de Harry Potter">
+                    <button class="frog-nav-btn" id="frogPrevBtn" type="button" aria-label="Personaje anterior" title="Personaje anterior">&#x3C;</button>
+                    
+                    <div class="frog-carousel-viewport" id="frogCarouselViewport" tabindex="0" aria-label="Visualizador de cartas de magos">
+                        <div class="frog-carousel-track" id="frogCarouselTrack">
+                            
+                            <!-- Carta 1: Harry Potter -->
+                            <div class="frog-card-scene" data-index="0">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Harry Potter. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/harry.jpg" alt="Harry Potter" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">El Niño Que Vivió</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Valiente y de temple inquebrantable, célebre por sobrevivir dos veces a la maldición mortal de Voldemort. Destacado buscador de Quidditch, líder del Ejército de Dumbledore y portador de una lealtad heroica por sus amigos.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 2: Hermione Granger -->
+                            <div class="frog-card-scene" data-index="1">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Hermione Granger. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/hermionetarjeta.jpg" alt="Hermione Granger" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">La bruja más brillante de su era</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Poseedora de un intelecto colosal, disciplina férrea y profunda empatía. Su enciclopédico dominio de encantamientos complejos, pociones y lógica deductiva salvaron al trío en incontables situaciones límite.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 3: Ron Weasley -->
+                            <div class="frog-card-scene" data-index="2">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Ron Weasley. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/rontarjeta.jpg" alt="Ron Weasley" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">Valiente estratega y Guardián</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Amigo incondicional de noble corazón y gran lealtad. Extraordinario estratega en el ajedrez mágico de magos, dotado de un gran humor y un coraje heroico que le permitió superar sus miedos para vencer a la oscuridad.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 4: Albus Dumbledore -->
+                            <div class="frog-card-scene" data-index="3">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Albus Dumbledore. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/dumbledoretarjeta.jpg" alt="Albus Dumbledore" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">Director & Gran Hechicero</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Considerado el mago más sabio y poderoso del mundo moderno. Vencedor del mago tenebroso Grindelwald en 1945, descubridor de los doce usos de la sangre de dragón y fundador de la Orden del Fénix.
+                                            </p>
+                                           
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 5: Severus Snape -->
+                            <div class="frog-card-scene" data-index="4">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Severus Snape. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/snapetarjeta.jpg" alt="Severus Snape" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">Maestro de Pociones
+                                                <br>
+                                                & Príncipe Mestizo</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Mago enigmático de colosal pericia en pociones y artes oscuras. Maestro consumado de la Oclumancia, ejerció de espía doble arriesgando su vida en absoluto silencio, motivado por su amor eterno.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 6: Lord Voldemort -->
+                            <div class="frog-card-scene" data-index="5">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Lord Voldemort. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/tarjetavoldemort.jpg" alt="Lord Voldemort" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">El Señor Tenebroso</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                El hechicero oscuro más temido de todos los tiempos. Obsesionado con erradicar a los impuros y burlar a la muerte, dividió su alma en siete Horrocruxes. Hábil hablante de pársel y maestro del duelo.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 7: Minerva McGonagall -->
+                            <div class="frog-card-scene" data-index="6">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Minerva McGonagall. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding: 0; background: none; clip-path: none; border-radius: 14px; overflow: hidden;" title="Clic para voltear">
+                                        <img src="../imgs/TARJETAmacgonagall.jpg" alt="Minerva McGonagall" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                              
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">Subdirectora & Jefa de Gryffindor</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Bruja estricta, justa y formidable duelista. Maestra eminente de Transformaciones, animaga capaz de convertirse en gato atigrado y apasionada protectora de todos los alumnos del colegio Hogwarts.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Carta 8: Sirius Black -->
+                            <div class="frog-card-scene" data-index="7">
+                                <div class="frog-card" role="button" tabindex="0" aria-label="Carta de Sirius Black. Clic para voltear." aria-pressed="false">
+                                    <div class="frog-card-face frog-card-front" style="padding:0;background:none;clip-path:none;border-radius:14px;overflow:hidden;" title="Clic para voltear">
+                                        <img src="../imgs/siriustarjeta.jpg" alt="Sirius Black" class="frog-card-direct-img">
+                                    </div>
+                                    <div class="frog-card-face frog-card-back">
+                                        <div class="frog-card-inner-frame back-frame">
+                                            <div class="frog-back-header">
+                                                <span class="frog-star">✦</span>
+                                                
+                                                <span class="frog-star">✦</span>
+                                            </div>
+                                            <div class="frog-character-title">Canuto & Prófugo de Azkaban</div>
+                                            <div class="frog-card-divider"></div>
+                                            <p class="frog-character-desc">
+                                                Padrino de Harry Potter y miembro legendario de los Merodeadores. Rebelde de nobleza indómita frente al dogma de sangre pura, animago en forma de gran perro negro y pilar de la Orden del Fénix.
+                                            </p>
+                                            
+                                            <div class="frog-back-footer">
+                                                <span class="frog-flip-return-hint">↺ Clic para volver a la foto</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button class="frog-nav-btn" id="frogNextBtn" type="button" aria-label="Siguiente personaje" title="Siguiente personaje">&#x3E;</button>
+                </div>
+
+                <!-- Controles, Indicadores y Contador -->
+                <div class="frog-carousel-controls">
+                    <div class="frog-carousel-indicators" id="frogIndicators" aria-label="Selector de personaje"></div>
+                    <div class="frog-carousel-meta">
+                        <span id="frogCounter" class="frog-counter">1 / 8</span>
+                        <span class="frog-hint-text">
+                            <span class="frog-hint-icon">✦</span> Haz clic en la foto o en la carta para voltearla y leer sus características
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Casas de Hogwarts -->
+        <section style="margin-top: 40px; margin-bottom: 35px;">
+            <h2 class="section-heading-books">Casas de Hogwarts</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; text-align: justify;">
+                Fundado hace más de mil años por cuatro de los hechiceros más brillantes de la era, el colegio divide a sus alumnos en cuatro casas nobles: Gryffindor, Hufflepuff, Ravenclaw y Slytherin, cada una reflejando singulares virtudes y fortalezas del espíritu.
+            </p>
+
+            <div class="book-carousel-wrapper" style="margin: 20px 0 10px 0;">
+                <button class="carousel-nav-btn" id="housesPrevBtn" aria-label="Casa anterior">&#x3C;</button>
+                <div class="books-display-row">
+                    <div class="book-card side-card" id="housesCardLeft" style="height: 180px; width: 120px;" title="Gryffindor">
+                        <img src="../imgs/Godric.webp" alt="Godric Gryffindor" id="housesImgLeft">
+                    </div>
+            
+                
+
+                    <div class="book-card center-card" id="housesCardCenter" style="height: 220px; width: 150px;" title="Slytherin">
+                        <img src="../imgs/salazar.jpg" alt="Salazar Slytherin" id="housesImgCenter">
+                    </div>
+                    <div class="book-card side-card" id="housesCardRight" style="height: 180px; width: 120px;" title="Ravenclaw">
+                        <img src="../imgs/rowena.webp" alt="Rowena Ravenclaw" id="housesImgRight">
+                    </div>
+                </div>
+                <button class="carousel-nav-btn" id="housesNextBtn" aria-label="Siguiente casa">&#x3E;</button>
+            </div>
+            <p class="wireframe-caption" style="font-size: 0.98rem; text-align: center;">Fundadores de las casas de Hogwarts.</p>
+
+            <div class="houses-grid">
+                <div class="house-item">
+                    <div class="house-card-box" style="border-bottom: 4px solid #740001; overflow: hidden; position: relative;">
+                        <img src="../imgs/gryffindor.jpg" alt="Gryffindor" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; bottom: 8px; left: 12px; background: rgba(29,27,38,0.85); color: #fff; padding: 2px 10px; border-radius: 6px; font-family: var(--font-serif); font-size: 1.05rem;">Gryffindor</span>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; text-align: justify;">
+                        Valores: Valor, coraje, caballerosidad y determinación. Su emblema es el león dorado y sus colores son el escarlata y el oro.
+                    </p>
+                </div>
+                <div class="house-item">
+                    <div class="house-card-box" style="border-bottom: 4px solid #1A472A; overflow: hidden; position: relative;">
+                        <img src="../imgs/slytherin.jpg" alt="Slytherin" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; bottom: 8px; left: 12px; background: rgba(29,27,38,0.85); color: #fff; padding: 2px 10px; border-radius: 6px; font-family: var(--font-serif); font-size: 1.05rem;">Slytherin</span>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; text-align: justify;">
+                        Valores: Ambición, astucia, liderazgo e ingenio. Su emblema es la serpiente y sus colores representativos son el verde y la plata.
+                    </p>
+                </div>
+                <div class="house-item">
+                    <div class="house-card-box" style="border-bottom: 4px solid #0E1A40; overflow: hidden; position: relative;">
+                        <img src="../imgs/ravenclaw.jpg" alt="Ravenclaw" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; bottom: 8px; left: 12px; background: rgba(29,27,38,0.85); color: #fff; padding: 2px 10px; border-radius: 6px; font-family: var(--font-serif); font-size: 1.05rem;">Ravenclaw</span>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; text-align: justify;">
+                        Valores: Sabiduría, intelecto, creatividad y curiosidad. Su emblema es el águila y sus colores distintivos son el azul y el bronce.
+                    </p>
+                </div>
+                <div class="house-item">
+                    <div class="house-card-box" style="border-bottom: 4px solid #ECB939; overflow: hidden; position: relative;">
+                        <img src="../imgs/hufflepuff1.jpg" alt="Hufflepuff" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span style="position: absolute; bottom: 8px; left: 12px; background: rgba(29,27,38,0.85); color: #fff; padding: 2px 10px; border-radius: 6px; font-family: var(--font-serif); font-size: 1.05rem;">Hufflepuff</span>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; text-align: justify;">
+                        Valores: Dedicación, paciencia, lealtad y juego limpio. Su emblema es el tejón y sus colores son el amarillo y el negro.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="wireframe-footer">
+        <div class="wireframe-footer-inner">
+            <p class="footer-copy">&copy; 2026 Snitch Club. &mdash;
+Todos los derechos reservados.
+            </p>
+
+            <ul class="footer-social-links" aria-label="Redes sociales">
+                <li>
+                    <a href="https://www.instagram.com/harrypotter/?hl=es" class="footer-social-link" title="Instagram" aria-label="Instagram" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/harrypotter/?locale=es_LA" class="footer-social-link" title="Facebook" aria-label="Facebook" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/harrypotter" class="footer-social-link" title="X" aria-label="X" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="footer-quote">
+                &ldquo;Las palabras son, en mi no tan humilde opinión, nuestra más inagotable fuente de magia.&rdquo;
+                &mdash; Albus Dumbledore
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/nav.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('frogCarouselTrack');
+            const viewport = document.getElementById('frogCarouselViewport');
+            const prevBtn = document.getElementById('frogPrevBtn');
+            const nextBtn = document.getElementById('frogNextBtn');
+            const indicatorsContainer = document.getElementById('frogIndicators');
+            const counterEl = document.getElementById('frogCounter');
+            const originalCardScenes = Array.from(track ? track.querySelectorAll('.frog-card-scene') : []);
+
+            if (!track || !originalCardScenes.length) return;
+
+            const totalCards = originalCardScenes.length;
+            const CLONES_COUNT = 3; // Mostrar 3 por fila y asegurar el loop fluido
+
+            // 1. Clonar cartas para bucle infinito continuo
+            // Clones al final (primeras 3 cartas)
+            for (let i = 0; i < CLONES_COUNT; i++) {
+                const clone = originalCardScenes[i].cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.classList.add('is-clone');
+                track.appendChild(clone);
+            }
+
+            // Clones al inicio (últimas 3 cartas)
+            for (let i = totalCards - 1; i >= totalCards - CLONES_COUNT; i--) {
+                const clone = originalCardScenes[i].cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.classList.add('is-clone');
+                track.insertBefore(clone, track.firstChild);
+            }
+
+            let currentRealIndex = 0; // Índice de personaje real (0 a totalCards - 1)
+            let currentTrackIndex = CLONES_COUNT; // Posición actual en el track incluyendo clones
+            let isMoving = false;
+
+            // Función para desvoltear todas las cartas (posición frontal inicial)
+            function unflipAllCards(exceptCard = null) {
+                track.querySelectorAll('.frog-card.is-flipped').forEach((c) => {
+                    if (c !== exceptCard) {
+                        c.classList.remove('is-flipped');
+                        c.setAttribute('aria-pressed', 'false');
+                    }
+                });
+            }
+
+            // Configurar el volteo exclusivo en todas las cartas (originales y clones)
+            track.querySelectorAll('.frog-card').forEach((card) => {
+                card.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const willBeFlipped = !card.classList.contains('is-flipped');
+
+                    // Al hacer clic y voltear una carta nueva, cualquier otra vuelve a su posición frontal
+                    unflipAllCards(willBeFlipped ? card : null);
+
+                    if (willBeFlipped) {
+                        card.classList.add('is-flipped');
+                        card.setAttribute('aria-pressed', 'true');
+                    } else {
+                        card.classList.remove('is-flipped');
+                        card.setAttribute('aria-pressed', 'false');
+                    }
+                });
+
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+
+            // Generar indicadores dinámicamente
+            if (indicatorsContainer) {
+                indicatorsContainer.innerHTML = '';
+                originalCardScenes.forEach((scene, idx) => {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = `frog-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Ir al personaje ${idx + 1}`);
+                    dot.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        goToSlide(idx);
+                    });
+                    indicatorsContainer.appendChild(dot);
+                });
+            }
+
+            function getSlideStep() {
+                const firstCard = track.querySelector('.frog-card-scene');
+                if (!firstCard) return 235;
+                const cardWidth = firstCard.getBoundingClientRect().width;
+                const trackStyle = window.getComputedStyle(track);
+                const gap = parseFloat(trackStyle.gap) || 15;
+                return cardWidth + gap;
+            }
+
+            function updateUI() {
+                // Actualizar indicadores
+                if (indicatorsContainer) {
+                    const dots = indicatorsContainer.querySelectorAll('.frog-dot');
+                    dots.forEach((dot, idx) => {
+                        dot.classList.toggle('active', idx === currentRealIndex);
+                    });
+                }
+
+                // Actualizar contador
+                if (counterEl) {
+                    counterEl.textContent = `${currentRealIndex + 1} / ${totalCards}`;
+                }
+            }
+
+            function setTrackPosition(instant = false) {
+                const step = getSlideStep();
+                const offset = currentTrackIndex * step;
+                if (instant) {
+                    track.style.transition = 'none';
+                } else {
+                    track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+                track.style.transform = `translateX(-${offset}px)`;
+            }
+
+            function moveToNext() {
+                if (isMoving) return;
+                isMoving = true;
+                unflipAllCards();
+
+                currentTrackIndex++;
+                currentRealIndex = (currentRealIndex + 1) % totalCards;
+                setTrackPosition(false);
+                updateUI();
+            }
+
+            function moveToPrev() {
+                if (isMoving) return;
+                isMoving = true;
+                unflipAllCards();
+
+                currentTrackIndex--;
+                currentRealIndex = (currentRealIndex - 1 + totalCards) % totalCards;
+                setTrackPosition(false);
+                updateUI();
+            }
+
+            function goToSlide(targetRealIndex) {
+                if (isMoving || targetRealIndex === currentRealIndex) return;
+                isMoving = true;
+                unflipAllCards();
+
+                currentRealIndex = targetRealIndex;
+                currentTrackIndex = targetRealIndex + CLONES_COUNT;
+                setTrackPosition(false);
+                updateUI();
+            }
+
+            // Bucle infinito fluido: reajustar posición invisiblemente al terminar la animación
+            track.addEventListener('transitionend', () => {
+                isMoving = false;
+
+                // Si se avanzó hacia los clones del final
+                if (currentTrackIndex >= CLONES_COUNT + totalCards) {
+                    currentTrackIndex = currentTrackIndex - totalCards;
+                    setTrackPosition(true);
+                }
+                // Si se retrocedió hacia los clones del inicio
+                else if (currentTrackIndex < CLONES_COUNT) {
+                    currentTrackIndex = currentTrackIndex + totalCards;
+                    setTrackPosition(true);
+                }
+            });
+
+            nextBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                moveToNext();
+            });
+
+            prevBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                moveToPrev();
+            });
+
+            // Navegación con teclado en el carrusel
+            viewport?.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    moveToPrev();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    moveToNext();
+                }
+            });
+
+            // Soporte para gestos táctiles (Swipe)
+            let touchStartX = 0;
+            viewport?.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            viewport?.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) {
+                        moveToNext();
+                    } else {
+                        moveToPrev();
+                    }
+                }
+            }, { passive: true });
+
+            // Ajuste responsivo al redimensionar la ventana
+            window.addEventListener('resize', () => {
+                setTrackPosition(true);
+            });
+
+            // Posición inicial en la primera carta original
+            setTrackPosition(true);
+            updateUI();
+        });
+
+        // Carrusel interactivo: Casas de Hogwarts
+        const housesImages = [
+            { src: "../imgs/Godric.webp", alt: "Godric Gryffindor", title: "Gryffindor" },
+            { src: "../imgs/salazar.jpg", alt: "Salazar Slytherin", title: "Slytherin" },
+            { src: "../imgs/rowena.webp", alt: "Rowena Ravenclaw", title: "Ravenclaw" },
+            { src: "../imgs/Helga.webp", alt: "Helga Hufflepuff", title: "Hufflepuff" }
+        ];
+
+        let housesCurrentIndex = 1;
+
+        function updateHousesCarousel() {
+            const total = housesImages.length;
+            const leftIdx = (housesCurrentIndex - 1 + total) % total;
+            const centerIdx = housesCurrentIndex;
+            const rightIdx = (housesCurrentIndex + 1) % total;
+
+            const cardLeft = document.getElementById("housesCardLeft");
+            const cardCenter = document.getElementById("housesCardCenter");
+            const cardRight = document.getElementById("housesCardRight");
+
+            const imgLeft = document.getElementById("housesImgLeft");
+            const imgCenter = document.getElementById("housesImgCenter");
+            const imgRight = document.getElementById("housesImgRight");
+
+            if (imgLeft) {
+                imgLeft.src = housesImages[leftIdx].src;
+                imgLeft.alt = housesImages[leftIdx].alt;
+            }
+            if (cardLeft) cardLeft.title = housesImages[leftIdx].title;
+
+            if (imgCenter) {
+                imgCenter.src = housesImages[centerIdx].src;
+                imgCenter.alt = housesImages[centerIdx].alt;
+            }
+            if (cardCenter) cardCenter.title = housesImages[centerIdx].title;
+
+            if (imgRight) {
+                imgRight.src = housesImages[rightIdx].src;
+                imgRight.alt = housesImages[rightIdx].alt;
+            }
+            if (cardRight) cardRight.title = housesImages[rightIdx].title;
+        }
+
+        document.getElementById("housesPrevBtn")?.addEventListener("click", () => {
+            housesCurrentIndex = (housesCurrentIndex - 1 + housesImages.length) % housesImages.length;
+            updateHousesCarousel();
+        });
+
+        document.getElementById("housesNextBtn")?.addEventListener("click", () => {
+            housesCurrentIndex = (housesCurrentIndex + 1) % housesImages.length;
+            updateHousesCarousel();
+        });
+
+        document.getElementById("housesCardLeft")?.addEventListener("click", () => {
+            housesCurrentIndex = (housesCurrentIndex - 1 + housesImages.length) % housesImages.length;
+            updateHousesCarousel();
+        });
+
+        document.getElementById("housesCardRight")?.addEventListener("click", () => {
+            housesCurrentIndex = (housesCurrentIndex + 1) % housesImages.length;
+            updateHousesCarousel();
+        });
+    </script>
+</body>
+</html>

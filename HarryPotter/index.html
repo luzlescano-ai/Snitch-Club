@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harry Potter y el Mundo Mágico</title>
+
+    <!-- Google Fonts: Editorial Serif & Clean Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+
+    <!-- Custom Wireframe Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header (Barra superior oscura con marca y buscador redondeado) -->
+    <header class="wireframe-header">
+        <div class="wireframe-header-inner">
+            <a href="index.html" class="brand-name" title="Nombre web.">
+                <img src="imgs/logo.png" alt="Snitch Club" width="50">
+                <span>Snitch Club</span>
+            </a>
+
+            <div class="search-box-wrapper">
+                <span class="search-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="search" class="search-input" id="searchInput" placeholder="Search"
+                    aria-label="Buscar en la web">
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Navegación (Segundo nivel con fondo berenjena oscuro y pestaña activa con subrayado) -->
+    <nav class="wireframe-nav-bar" aria-label="Navegación principal">
+        <div class="wireframe-nav-inner">
+            <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Abrir menú de navegación"
+                aria-expanded="false" aria-controls="navMenu">
+                <span class="hamburger-title">Menú de Navegación</span>
+                <span class="hamburger-icon" aria-hidden="true">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </span>
+            </button>
+
+            <ul class="wireframe-nav-list" id="navMenu">
+                <li class="wireframe-nav-item">
+                    <a href="index.html" class="wireframe-nav-link active" aria-current="page">Home</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="html/casasymagos.html" class="wireframe-nav-link">Casas y magos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="html/historiayconflictos.html" class="wireframe-nav-link">Historia y conflictos</a>
+                </li>
+                <li class="wireframe-nav-item">
+                    <a href="html/descubritumagia.html" class="wireframe-nav-link">Descubrí tu magia</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal con fondo pergamino -->
+    <main class="wireframe-main-content">
+
+        <!-- Sección: Introducción -->
+        <section class="intro-section" aria-labelledby="intro-heading">
+            <h1 class="intro-title" id="intro-heading">Tu guía al mundo mágico</h1>
+            <h3 class="intro-subtitle">Juro solemnemente que mis intenciones no son buenas</h3>
+
+            <p class="intro-paragraph">
+                El universo de Harry Potter, concebido por J. K. Rowling, ha fascinado a generaciones enteras
+                transportándonos al emblemático Colegio Hogwarts de Magia y Hechicería. A través de sus pasillos
+                encantados, secretos milenarios y criaturas extraordinarias, la historia relata el descubrimiento de la
+                identidad, el valor inquebrantable de la amistad y la lucha eterna contra las fuerzas tenebrosas. Un
+                viaje inolvidable donde el amor, la lealtad y las decisiones personales demuestran ser más poderosos que
+                cualquier encantamiento.
+            </p>
+        </section>
+
+        <!-- Sección: La saga de libros -->
+        <section class="books-section" aria-labelledby="books-heading">
+            <h2 class="section-heading-books" id="books-heading">La saga de libros</h2>
+
+            <!-- Carrusel de libros -->
+            <div class="book-carousel-wrapper">
+                <button class="carousel-nav-btn" id="bookPrevBtn" aria-label="Libro anterior"
+                    title="Libro anterior">&#x3C;</button>
+
+                <div class="books-display-row" id="booksRow">
+                    <!-- Tarjeta lateral izquierda -->
+                    <div class="book-card side-card" id="bookCardLeft" data-index="0"
+                        title="Harry Potter y la Piedra Filosofal">
+                        <img src="imgs/Harry Potter y la piedra filosofal.jpg" alt="Harry Potter y la Piedra Filosofal"
+                            id="bookImgLeft">
+                        <div class="book-card-badge" id="bookBadgeLeft">Libro I</div>
+                    </div>
+
+                    <!-- Tarjeta central destacada -->
+                    <div class="book-card center-card" id="bookCardCenter" data-index="1"
+                        title="Harry Potter y la Cámara Secreta">
+                        <img src="imgs/Harry Potter y la camara de los secretos.jpg"
+                            alt="Harry Potter y la Cámara Secreta" id="bookImgCenter">
+                        <div class="book-card-badge" id="bookBadgeCenter">Libro II</div>
+                    </div>
+
+                    <!-- Tarjeta lateral derecha -->
+                    <div class="book-card side-card" id="bookCardRight" data-index="2"
+                        title="Harry Potter y el Prisionero de Azkaban">
+                        <img src="imgs/Harry Potter y el prisionero de azkaban.jpg"
+                            alt="Harry Potter y el Prisionero de Azkaban" id="bookImgRight">
+                        <div class="book-card-badge" id="bookBadgeRight">Libro III</div>
+                    </div>
+                </div>
+
+                <button class="carousel-nav-btn" id="bookNextBtn" aria-label="Siguiente libro"
+                    title="Siguiente libro">&#x3E;</button>
+            </div>
+
+            <!-- Texto descriptivo de la saga de libros -->
+            <p class="books-description-text">
+                La serie literaria consta de siete volúmenes publicados entre 1997 y 2007. Traducida a más de 80 idiomas
+                y con más de 500 millones de copias distribuidas en todo el planeta, cada tomo profundiza en la madurez
+                de sus protagonistas y desvela las complejas raíces del mundo mágico, desde la llegada de la carta de
+                aceptación hasta la épica Batalla de Hogwarts.
+            </p>
+        </section>
+
+        <!-- Separador horizontal exactamente como en el wireframe -->
+        <hr class="wireframe-divider">
+
+        <!-- Sección: Adaptación Cinematográfica / Películas -->
+        <section class="movies-section" aria-labelledby="movies-heading">
+            <h2 class="section-heading-books" id="movies-heading">Adaptación cinematográfica</h2>
+            <p class="movies-intro-text">
+                El paso de la saga literaria a la gran pantalla fue una de las producciones más ambiciosas en la
+                historia del cine moderno. A lo largo de ocho largometrajes producidos por Warner Bros., directores como
+                Chris Columbus, Alfonso Cuarón, Mike Newell y David Yates dieron vida con maestría a los escenarios de
+                Hogwarts, acompañados por la icónica banda sonora de John Williams.
+            </p>
+
+            <!-- Carrusel de películas con botones externos e internos para avanzar y retroceder -->
+            <div class="movie-carousel-wrapper">
+                <button class="carousel-nav-btn" id="movieOuterPrevBtn" aria-label="Película anterior"
+                    title="Película anterior">&#x3C;</button>
+
+                <!-- Tarjeta con bordes redondeados y dos columnas (Portada + Sinopsis) -->
+                <div class="movie-showcase-box" id="movieBox">
+                    <div class="movie-box-grid">
+                        <!-- Columna izquierda: Portada de la película -->
+                        <div class="movie-col-left">
+                            <div class="movie-poster-card" id="moviePosterWrapper"
+                                title="Clic para avanzar a la siguiente película">
+                                <img src="imgs/hp1.webp" alt="Portada de la película" id="moviePosterImg">
+                            </div>
+                        </div>
+
+                        <!-- Columna derecha: Sinopsis de la película -->
+                        <div class="movie-col-right">
+                            <div>
+                                <h3 class="movie-title-header" id="movieTitle">Harry Potter y la Piedra Filosofal</h3>
+                                <div class="movie-meta" id="movieMeta">Año: 2001 &bull; Dirección: Chris Columbus &bull;
+                                    Duración: 152 min</div>
+                                <div class="movie-synopsis-content" id="movieSynopsis">
+                                    Harry Potter es un niño huérfano criado por sus insensibles tíos, los Dursley. En su
+                                    undécimo cumpleaños, el gigante guardián Rubeus Hagrid le entrega una carta que
+                                    cambiará su vida para siempre: ha sido admitido en el Colegio Hogwarts de Magia y
+                                    Hechicería. Al ingresar en este asombroso nuevo mundo, Harry descubre la verdad
+                                    sobre el trágico destino de sus padres, forja una alianza inseparable con Ron
+                                    Weasley y Hermione Granger, y desvela el enigma de la Piedra Filosofal antes de que
+                                    caiga en manos oscuras.
+                                </div>
+                            </div>
+
+                            <!-- Barra interactiva del carrusel de películas -->
+                            <div class="movie-controls-bar">
+                                <div class="movie-indicators" id="movieIndicators" aria-label="Selector de película">
+                                    <!-- Generados dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-nav-btn" id="movieOuterNextBtn" aria-label="Siguiente película"
+                    title="Siguiente película">&#x3E;</button>
+            </div>
+
+    </main>
+
+    <!-- Footer a tono con la paleta oscura de la cabecera -->
+    <footer class="wireframe-footer">
+        <div class="wireframe-footer-inner">
+            <p class="footer-copy">&copy; 2026 Snitch Club. &mdash;
+                Todos los derechos reservados.
+            </p>
+
+            <ul class="footer-social-links" aria-label="Redes sociales">
+                <li>
+                    <a href="https://www.instagram.com/harrypotter/?hl=es" class="footer-social-link" title="Instagram"
+                        aria-label="Instagram" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/harrypotter/?locale=es_LA" class="footer-social-link"
+                        title="Facebook" aria-label="Facebook" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/harrypotter" class="footer-social-link" title="X" aria-label="X"
+                        target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="footer-quote">
+                &ldquo;Las palabras son, en mi no tan humilde opinión, nuestra más inagotable fuente de magia.&rdquo;
+                &mdash; Albus Dumbledore
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- JavaScript Interactivo para Carruseles y Wireframe UX -->
+    <script>
+        // Datos de los 7 libros de la saga
+        const booksData = [
+            {
+                title: "Harry Potter y la Piedra Filosofal",
+                badge: "Libro I",
+                year: "1997",
+                img: "imgs/Harry Potter y la piedra filosofal.jpg"
+            },
+            {
+                title: "Harry Potter y la Cámara Secreta",
+                badge: "Libro II",
+                year: "1998",
+                img: "imgs/Harry Potter y la camara de los secretos.jpg"
+            },
+            {
+                title: "Harry Potter y el Prisionero de Azkaban",
+                badge: "Libro III",
+                year: "1999",
+                img: "imgs/Harry Potter y el prisionero de azkaban.jpg"
+            },
+            {
+                title: "Harry Potter y el Cáliz de Fuego",
+                badge: "Libro IV",
+                year: "2000",
+                img: "imgs/Harry Potter y el caliz de fuego.jpg"
+            },
+            {
+                title: "Harry Potter y la Orden del Fénix",
+                badge: "Libro V",
+                year: "2003",
+                img: "imgs/Harry Potter y la orden del fenix.jpg"
+            },
+            {
+                title: "Harry Potter y el Misterio del Príncipe",
+                badge: "Libro VI",
+                year: "2005",
+                img: "imgs/Harry Potter y el misterio del principe.jpg"
+            },
+            {
+                title: "Harry Potter y las Reliquias de la Muerte",
+                badge: "Libro VII",
+                year: "2007",
+                img: "imgs/Harry Potter y las reliquias de la muerte.jpg"
+            }
+        ];
+
+        let currentBookCenterIndex = 1;
+
+        function updateBookCarousel() {
+            const total = booksData.length;
+            const leftIdx = (currentBookCenterIndex - 1 + total) % total;
+            const centerIdx = currentBookCenterIndex;
+            const rightIdx = (currentBookCenterIndex + 1) % total;
+
+            const cardLeft = document.getElementById("bookCardLeft");
+            const cardCenter = document.getElementById("bookCardCenter");
+            const cardRight = document.getElementById("bookCardRight");
+
+            const imgLeft = document.getElementById("bookImgLeft");
+            const badgeLeft = document.getElementById("bookBadgeLeft");
+            const imgCenter = document.getElementById("bookImgCenter");
+            const badgeCenter = document.getElementById("bookBadgeCenter");
+            const imgRight = document.getElementById("bookImgRight");
+            const badgeRight = document.getElementById("bookBadgeRight");
+
+            if (cardLeft) {
+                cardLeft.dataset.index = leftIdx;
+                cardLeft.title = booksData[leftIdx].title;
+            }
+            if (cardCenter) {
+                cardCenter.dataset.index = centerIdx;
+                cardCenter.title = booksData[centerIdx].title;
+            }
+            if (cardRight) {
+                cardRight.dataset.index = rightIdx;
+                cardRight.title = booksData[rightIdx].title;
+            }
+
+            if (imgLeft) {
+                imgLeft.src = booksData[leftIdx].img;
+                imgLeft.alt = booksData[leftIdx].title;
+                badgeLeft.textContent = booksData[leftIdx].badge;
+            }
+            if (imgCenter) {
+                imgCenter.src = booksData[centerIdx].img;
+                imgCenter.alt = booksData[centerIdx].title;
+                badgeCenter.textContent = booksData[centerIdx].badge;
+            }
+            if (imgRight) {
+                imgRight.src = booksData[rightIdx].img;
+                imgRight.alt = booksData[rightIdx].title;
+                badgeRight.textContent = booksData[rightIdx].badge;
+            }
+        }
+
+        document.getElementById("bookPrevBtn")?.addEventListener("click", () => {
+            currentBookCenterIndex = (currentBookCenterIndex - 1 + booksData.length) % booksData.length;
+            updateBookCarousel();
+        });
+
+        document.getElementById("bookNextBtn")?.addEventListener("click", () => {
+            currentBookCenterIndex = (currentBookCenterIndex + 1) % booksData.length;
+            updateBookCarousel();
+        });
+
+        document.getElementById("bookCardLeft")?.addEventListener("click", () => {
+            currentBookCenterIndex = (currentBookCenterIndex - 1 + booksData.length) % booksData.length;
+            updateBookCarousel();
+        });
+
+        document.getElementById("bookCardRight")?.addEventListener("click", () => {
+            currentBookCenterIndex = (currentBookCenterIndex + 1) % booksData.length;
+            updateBookCarousel();
+        });
+
+        // Datos de las 8 películas de la saga con sus imágenes correspondientes (hp1 a hp8)
+        const moviesData = [
+            {
+                title: "Harry Potter y la Piedra Filosofal",
+                meta: "Película 1 de 8 • Año: 2001 • Dirección: Chris Columbus • Duración: 152 min",
+                img: "imgs/hp1.webp",
+                synopsis: "Harry Potter es un niño huérfano criado por sus insensibles tíos, los Dursley. En su undécimo cumpleaños, el gigante guardián Rubeus Hagrid le entrega una carta que cambiará su vida para siempre: ha sido admitido en el Colegio Hogwarts de Magia y Hechicería. Al ingresar en este asombroso nuevo mundo, Harry descubre la verdad sobre el trágico destino de sus padres, forja una alianza inseparable con Ron Weasley y Hermione Granger, y desvela el enigma de la Piedra Filosofal antes de que caiga en manos oscuras."
+            },
+            {
+                title: "Harry Potter y la Cámara Secreta",
+                meta: "Película 2 de 8 • Año: 2002 • Dirección: Chris Columbus • Duración: 161 min",
+                img: "imgs/hp2.webp",
+                synopsis: "En su segundo año escolar en Hogwarts, misteriosos ataques petrifican a varios alumnos hijos de muggles. Rumores ancestrales despiertan sobre el heredero de Salazar Slytherin y una temible cámara oculta bajo el castillo. Con la ayuda del diario encantado de Tom Riddle, Harry y sus amigos deberán descubrir la bestia que acecha en las sombras."
+            },
+            {
+                title: "Harry Potter y el Prisionero de Azkaban",
+                meta: "Película 3 de 8 • Año: 2004 • Dirección: Alfonso Cuarón • Duración: 142 min",
+                img: "imgs/hp3.webp",
+                synopsis: "El peligroso convicto Sirius Black escapa de la impenetrable prisión mágica de Azkaban, aparentemente tras el rastro de Harry. Mientras los aterradores Dementores custodian Hogwarts, Harry aprende a dominar el encantamiento Patronus con el profesor Lupin y descubre la verdad oculta sobre la traición que condenó a sus padres."
+            },
+            {
+                title: "Harry Potter y el Cáliz de Fuego",
+                meta: "Película 4 de 8 • Año: 2005 • Dirección: Mike Newell • Duración: 157 min",
+                img: "imgs/hp4.webp",
+                synopsis: "Hogwarts es la sede del legendario Torneo de los Tres Magos. Misteriosamente, el Cáliz de Fuego escoge a Harry como un inesperado cuarto competidor. Entre dragones feroces, pruebas acuáticas y un laberinto encantado, una conspiración en las sombras conduce al inevitable y temido renacimiento de Lord Voldemort."
+            },
+            {
+                title: "Harry Potter y la Orden del Fénix",
+                meta: "Película 5 de 8 • Año: 2007 • Dirección: David Yates • Duración: 138 min",
+                img: "imgs/hp5.webp",
+                synopsis: "Con el Ministerio de Magia negando el regreso del Señor Tenebroso, Dolores Umbridge asume el control tiránico de Hogwarts. Harry, Ron y Hermione forman el 'Ejército de Dumbledore' para enseñar a sus compañeros a defenderse, culminando en un duelo desgarrador en el Departamento de Misterios."
+            },
+            {
+                title: "Harry Potter y el Misterio del Príncipe",
+                meta: "Película 6 de 8 • Año: 2009 • Dirección: David Yates • Duración: 153 min",
+                img: "imgs/hp6.webp",
+                synopsis: "Dumbledore prepara a Harry para la batalla definitiva explorando los recuerdos más oscuros de la juventud de Voldemort y el secreto de los Horrocruxes. Con un misterioso libro de pociones perteneciente al Príncipe Mestizo, Harry desentraña los secretos que culminarán en una dolorosa pérdida para el mundo mágico."
+            },
+            {
+                title: "Harry Potter y las Reliquias de la Muerte: Parte 1",
+                meta: "Película 7 de 8 • Año: 2010 • Dirección: David Yates • Duración: 146 min",
+                img: "imgs/hp7.webp",
+                synopsis: "En la clandestinidad y fuera de la protección de Hogwarts, Harry, Hermione y Ron emprenden la peligrosa misión de localizar y destruir los Horrocruxes que sostienen la inmortalidad de Voldemort. Perseguidos por carroñeros y mortífagos, descubren la milenaria leyenda de las tres Reliquias de la Muerte."
+            },
+            {
+                title: "Harry Potter y las Reliquias de la Muerte: Parte 2",
+                meta: "Película 8 de 8 • Año: 2011 • Dirección: David Yates • Duración: 130 min",
+                img: "imgs/hp8.webp",
+                synopsis: "En la apoteósica conclusión, la búsqueda de los últimos Horrocruxes conduce a los héroes de regreso a Hogwarts. Amigos, profesores y aliados se reúnen para librar la histórica Batalla de Hogwarts, donde Harry y Lord Voldemort se enfrentan en la batalla definitiva por el destino del mundo entero."
+            }
+        ];
+
+        let currentMovieIndex = 0;
+
+        function renderMovieIndicators() {
+            const container = document.getElementById("movieIndicators");
+            if (!container) return;
+            container.innerHTML = "";
+            moviesData.forEach((movie, idx) => {
+                const dot = document.createElement("span");
+                dot.className = `indicator-dot ${idx === currentMovieIndex ? 'active' : ''}`;
+                dot.title = `Película ${idx + 1}: ${movie.title}`;
+                dot.setAttribute("role", "button");
+                dot.setAttribute("aria-label", `Ir a ${movie.title}`);
+                dot.addEventListener("click", () => {
+                    if (currentMovieIndex !== idx) {
+                        currentMovieIndex = idx;
+                        updateMovieShowcase();
+                    }
+                });
+                container.appendChild(dot);
+            });
+        }
+
+        function updateMovieShowcase() {
+            const movie = moviesData[currentMovieIndex];
+            const titleEl = document.getElementById("movieTitle");
+            const metaEl = document.getElementById("movieMeta");
+            const synEl = document.getElementById("movieSynopsis");
+            const posterEl = document.getElementById("moviePosterImg");
+            const counterEl = document.getElementById("movieCounter");
+
+            if (titleEl) titleEl.textContent = movie.title;
+            if (metaEl) metaEl.textContent = movie.meta;
+            if (synEl) synEl.textContent = movie.synopsis;
+            if (counterEl) counterEl.textContent = `${currentMovieIndex + 1} / ${moviesData.length}`;
+
+            if (posterEl) {
+                posterEl.classList.add("fade-out");
+                setTimeout(() => {
+                    posterEl.src = movie.img;
+                    posterEl.alt = movie.title;
+                    posterEl.classList.remove("fade-out");
+                }, 180);
+            }
+
+            renderMovieIndicators();
+        }
+
+        function moviePrev() {
+            currentMovieIndex = (currentMovieIndex - 1 + moviesData.length) % moviesData.length;
+            updateMovieShowcase();
+        }
+
+        function movieNext() {
+            currentMovieIndex = (currentMovieIndex + 1) % moviesData.length;
+            updateMovieShowcase();
+        }
+
+        // Event listeners para avanzar y retroceder películas (botones externos y clic en portada)
+        document.getElementById("movieOuterPrevBtn")?.addEventListener("click", moviePrev);
+        document.getElementById("movieOuterNextBtn")?.addEventListener("click", movieNext);
+        document.getElementById("moviePosterWrapper")?.addEventListener("click", movieNext);
+
+        // Soporte para navegar con teclado (teclas flecha izquierda y derecha)
+        document.addEventListener("keydown", (e) => {
+            // Evitar interferir si el usuario está escribiendo en el buscador
+            if (document.activeElement === document.getElementById("searchInput")) return;
+            if (e.key === "ArrowLeft") {
+                moviePrev();
+            } else if (e.key === "ArrowRight") {
+                movieNext();
+            }
+        });
+
+        // Inicialización
+        renderMovieIndicators();
+        updateBookCarousel();
+
+        // Búsqueda interactiva básica
+        const searchInput = document.getElementById("searchInput");
+        searchInput?.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const query = searchInput.value.trim().toLowerCase();
+                if (query) {
+                    alert(`Buscando "${query}" en el archivo del Mundo Mágico...`);
+                }
+            }
+        });
+    </script>
+    <script src="js/nav.js"></script>
+</body>
+
+</html>
